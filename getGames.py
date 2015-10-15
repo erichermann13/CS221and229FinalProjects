@@ -4,6 +4,9 @@ import csv
 from datetime import datetime, date
 import pandas as pd
 
+# Note: this code was strongly borrowed from http://www.danielforsyth.me/exploring_nba_data_in_python/
+
+
 year = 2015
 teamsFile = './teams.csv'
 BASE_URL = 'http://espn.go.com/nba/team/schedule/_/name/{0}/year/{1}/seasontype/2/{2}'
@@ -40,9 +43,6 @@ for i in xrange(1, len(teamsList)):
         if aRow[2] == _other_team:
           _other_team = aRow[0]
           break
-      # _other_team = teamsList[0][teamsList[2] == _other_team]
-      # print _other_team
-      # _other_team = _other_team.values[0]
       
       _score = columns[2].a.text.split(' ')[0].split('-')
       # print _score
