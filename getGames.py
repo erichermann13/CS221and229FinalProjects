@@ -53,8 +53,11 @@ for i in xrange(1, len(teamsList)):
       visit_team.append(_team if not _home else _other_team)
 
       d = datetime.strptime(columns[0].text, '%a, %b %d')
-      dates.append(date(year, d.month, d.day))
-      # print dates[-1]
+      theYear = year
+      if d.month in (10, 11, 12):
+        theYear = year - 1
+      dates.append(date(theYear, d.month, d.day))
+      print dates[-1]
 
       if _home:
         if _won:
@@ -78,7 +81,7 @@ for i in xrange(1, len(teamsList)):
 
  
 dic = {'id': game_id, 'date': dates, 'home_team': home_team, 'visit_team': visit_team, 
-        'home_team_score': home_team_score, 'visit_team_score': visit_team_score}
+        'home_team_score': home_team_score, 'visit_team_score': visit_team_score, 'game_id': game_id}
         
 games = pd.DataFrame(dic).drop_duplicates(cols='id').set_index('id')
 print(games)

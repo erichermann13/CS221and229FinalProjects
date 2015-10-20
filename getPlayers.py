@@ -20,7 +20,13 @@ table = BeautifulSoup(request.text).find('table', class_='mod-data')
 heads = table.find_all('thead')
 headers = heads[0].find_all('tr')[1].find_all('th')[1:]
 headers = [th.text for th in headers]
-# print headers
+headers[1] = 'FGM'
+headers[2] = '3PM'
+headers[3] = 'FTM'
+headers.insert(4, 'FTA')
+headers.insert(3, '3PA')
+headers.insert(2, 'FGA')
+print headers
 
 columns = ['id', 'team', 'player'] + headers
 
@@ -36,10 +42,22 @@ def get_players(players, team_name):
 		# break
 		array[i, 0] = cols[0].text.split(',')[0]
 		# print array[i, 0]
-		for j in range(1, len(headers) + 1):
+		k = 1
+		for j in range(1, len(headers) - 2):
 			if not cols[1].text.startswith('DNP'):
-				array[i, j] = cols[j].text
+				# print j
+				array[i, k] = cols[j].text
 				# print cols[j].text
+				if j in (2, 3, 4):
+					text = cols[j].text
+					made = text.split('-')[0]
+					attempted = text.split('-')[1]
+					array[i, k] = made
+					k = k+1
+					array[i, k] = attempted
+			k = k+1
+		# print headers
+		# print array[i]
 	# print array
 	# print "9999999999999999999999999999999999999999999999999999"
 	frame = pd.DataFrame(columns=columns)
@@ -70,7 +88,7 @@ for index, row in games[:].iterrows():
     team_1_players = bodies[0].find_all('tr') + bodies[1].find_all('tr')
     team_1_players = get_players(team_1_players, team_1)
     team_1_players['game_id'] = row[0]
-    # print team_1_players
+    
     players = players.append(team_1_players)
     
     team_2 = heads[3].th.text
@@ -80,6 +98,7 @@ for index, row in games[:].iterrows():
     players = players.append(team_2_players)
 
 players = players.set_index('id')
+players = pd.merge(players, games, on='game_id')
 print players
 players.to_csv('./players.csv')
 
