@@ -72,7 +72,7 @@ for index, row in games[:].iterrows():
     team_1_players['game_id'] = row[0]
     # print team_1_players
     players = players.append(team_1_players)
-    
+
     team_2 = heads[3].th.text
     team_2_players = bodies[3].find_all('tr') + bodies[4].find_all('tr')
     team_2_players = get_players(team_2_players, team_2)
