@@ -7,18 +7,24 @@ import numpy as np
 import html5lib
 from collections import Counter
 
-playersFile = './players.csv'
+playersFile = './DKSalaries.csv'
 players =  pd.read_csv(playersFile)
+players = players.sort('AvgPointsPerGame', ascending=False)
+bank = 50000
+minCost = 4000
+team = []
 
-new_df = pd.DataFrame()
 
-for player_name in pd.unique(players.player.ravel()):
-    curr_player = players.loc[players['player'] == player_name]
-    mean = curr_player.mean()
-    # curr_player_price = curr_player[0]['price']
-    # curr_player_pos = curr_player[0]['pos']
-    scorePrediction = mean.loc['AST']*1.5 + mean.loc['PTS']*1 + mean.loc['REB']*1.25 + mean.loc['STL']*2 - mean.loc['TO']*0.5
+for n in range(2):
+    for i, position in enumerate(pd.unique(players.Position.ravel())):
+        currPosition = players.loc[players['Position'] == position]
+        topPlayer = currPosition.iloc[n]
+        if (bank - float(topPlayer['Salary'])) >= 0:
+            team.append(topPlayer['Name'])
+            bank -= float(topPlayer['Salary'])
 
-    print player_name, scorePrediction
+print team
+print 'Money Remaining: ',bank
+
 
 
