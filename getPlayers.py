@@ -11,6 +11,16 @@ import html5lib
 gamesFile = './games.csv'
 BASE_URL = 'http://espn.go.com/nba/boxscore?gameId={0}'
 
+pointsForPoints = 1
+pointsForThree = 0.5
+pointsForRebound = 1.25
+pointsForAssist = 1.5
+pointsForSteal = 2
+pointsForBlock = 2
+pointsForTurnover = -.5
+pointsForDoubleDouble = 1.5
+pointsForTripleDouble = 3
+
 games =  pd.read_csv(gamesFile)
 
 request = requests.get(BASE_URL.format(games['id'][0]))
@@ -26,6 +36,7 @@ headers[3] = 'FTM'
 headers.insert(4, 'FTA')
 headers.insert(3, '3PA')
 headers.insert(2, 'FGA')
+headers.append('DKPoints')
 print headers
 
 columns = ['id', 'team', 'player'] + headers
@@ -43,9 +54,9 @@ def get_players(players, team_name):
 		array[i, 0] = cols[0].text.split(',')[0]
 		# print array[i, 0]
 		k = 1
-		for j in range(1, len(headers) - 2):
+		for j in range(1, len(headers) - 3):
+			# print "%d %s" % (k, headers[k])
 			if not cols[1].text.startswith('DNP'):
-				# print j
 				array[i, k] = cols[j].text
 				# print cols[j].text
 				if j in (2, 3, 4):
@@ -56,7 +67,28 @@ def get_players(players, team_name):
 					k = k+1
 					array[i, k] = attempted
 			k = k+1
+		for m in xrange(1, len(array[i])):
+			array[i][m] = float(array[i][m])
+			# print "%d %s %s" % (m, headers[m-1], array[i, m])
 		# print headers
+		(points, rebounds, assists, blocks, steals) = array[i][17], array[i][10], array[i][11], array[i][13], array[i][12]
+		doubleDoubles = tripleDoubles = 0
+		numDoubles = 0
+		if points >= 10: numDoubles+=1
+		if rebounds >= 10: numDoubles+=1
+		if assists >= 10: numDoubles+=1
+		if blocks >= 10: numDoubles+=1
+		if steals >= 10: numDoubles+=1
+		if numDoubles >= 3:
+			doubleDoubles += 1
+			tripleDoubles += 1
+		elif numDoubles == 2:
+			doubleDoubles += 1
+
+		DKPoints = (points*pointsForPoints + array[i][4]*pointsForThree + rebounds*pointsForRebound + 
+			assists*pointsForAssist + steals*pointsForSteal + blocks*pointsForBlock + 
+			array[i][14]*pointsForTurnover + doubleDoubles*pointsForDoubleDouble + tripleDoubles*pointsForTripleDouble)
+		array[i][18] = DKPoints
 		# print array[i]
 	# print array
 	# print "9999999999999999999999999999999999999999999999999999"
