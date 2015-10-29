@@ -22,9 +22,17 @@ home_team = []
 home_team_score = []
 visit_team = []
 visit_team_score = []
+home_team_wins = []
+home_team_losses = []
+away_team_wins = []
+away_team_losses = []
+
+gamesCount = 0
+
 for i in xrange(1, len(teamsList)):
   currRow = teamsList[i]
   _team = currRow[0]
+  print "%s %s %s" % (_team, currRow[1], currRow[2])
   websiteText = requests.get(BASE_URL.format(currRow[1], year, currRow[2]))
   table = BeautifulSoup(websiteText.text).table
   # print table.prettify()
@@ -49,6 +57,30 @@ for i in xrange(1, len(teamsList)):
       _won = True if columns[2].span.text == 'W' else False
       # print _won
       game_id.append(_id)
+
+      boxScoreText = requests.get(BASE_GAME_URL.format(_id))
+      # print _id
+      boxScoreTable = BeautifulSoup(boxScoreText.text).find_all('div', class_='team-info')
+      # Counting on the fact that away is first in data, only 2 entries
+      away = True
+      for element in boxScoreTable:
+        recordData = element.find('p').text.split(',')[0][1:]
+        # print recordData
+        winsAndLosses = recordData.split('-')
+        wins, losses = (winsAndLosses[0], winsAndLosses[1])
+        if away:
+          away_team_wins.append(wins)
+          away_team_losses.append(losses)
+          away = False
+        else:
+          home_team_wins.append(wins)
+          home_team_losses.append(losses)
+
+
+      # print "hello"
+      # print boxScoreTable.find_all('p')
+      # print "#############################################################################"
+
       home_team.append(_team if _home else _other_team)
       visit_team.append(_team if not _home else _other_team)
 
@@ -74,6 +106,9 @@ for i in xrange(1, len(teamsList)):
           home_team_score.append(_score[0])
           visit_team_score.append(_score[1])
 
+      gamesCount += 1
+      print gamesCount
+
 
       # Note that some items in columns will not actually be games
     except:
@@ -81,7 +116,9 @@ for i in xrange(1, len(teamsList)):
 
  
 dic = {'id': game_id, 'date': dates, 'home_team': home_team, 'visit_team': visit_team, 
-        'home_team_score': home_team_score, 'visit_team_score': visit_team_score, 'game_id': game_id}
+        'home_team_score': home_team_score, 'visit_team_score': visit_team_score, 'game_id': game_id, 
+        'home_team_wins': home_team_wins, 'home_team_losses': home_team_losses, 'away_team_wins': away_team_wins, 
+        'away_team_losses': away_team_losses}
         
 games = pd.DataFrame(dic).drop_duplicates(cols='id').set_index('id')
 print(games)
