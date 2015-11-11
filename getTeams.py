@@ -37,10 +37,6 @@ writer = csv.writer(outfile)
 writer.writerow(['team', 'prefix_1', 'prefix_2'])
 writer.writerows(list_of_rows)
 
-# print teams
-# print len(teams)
-# print prefix_1
-# print prefix_2
 
 
 
