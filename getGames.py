@@ -7,10 +7,11 @@ import pandas as pd
 # Note: this code was strongly borrowed from http://www.danielforsyth.me/exploring_nba_data_in_python/
 
 
-year = 2015
+year = 2016
 teamsFile = './teams.csv'
 BASE_URL = 'http://espn.go.com/nba/team/schedule/_/name/{0}/year/{1}/seasontype/2/{2}'
 BASE_GAME_URL = 'http://espn.go.com/nba/boxscore?gameId={0}'
+outputFileName = './games' + str(year) + '.csv'
 
 csvfile = open(teamsFile, 'rb')
 reader = csv.reader(csvfile)
@@ -122,4 +123,4 @@ dic = {'id': game_id, 'date': dates, 'home_team': home_team, 'visit_team': visit
         
 games = pd.DataFrame(dic).drop_duplicates(cols='id').set_index('id')
 print(games)
-games.to_csv('./games.csv')
+games.to_csv(outputFileName)
