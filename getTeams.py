@@ -5,6 +5,8 @@ import csv
 # Note: this script was inspired by https://first-web-scraper.readthedocs.org/en/latest/ 
 # and http://www.danielforsyth.me/exploring_nba_data_in_python/
 
+outputFileName = './teams.csv'
+
 url = 'http://espn.go.com/nba/teams'
 response = requests.get(url)
 html = response.content
@@ -32,7 +34,7 @@ for i in xrange(0, len(teams)):
 
 print list_of_rows
 
-outfile = open('./teams.csv', 'wb')
+outfile = open(outputFileName, 'wb')
 writer = csv.writer(outfile)
 writer.writerow(['team', 'prefix_1', 'prefix_2'])
 writer.writerows(list_of_rows)

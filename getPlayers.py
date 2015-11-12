@@ -7,9 +7,11 @@ import numpy as np
 import html5lib
 
 # Note: this code was strongly borrowed from http://www.danielforsyth.me/exploring_nba_data_in_python/
+year = 2016
 
-gamesFile = './games.csv'
+gamesFile = './games' + str(year) + '.csv'
 BASE_URL = 'http://espn.go.com/nba/boxscore?gameId={0}'
+outputFile = './players' + str(year) + '.csv'
 
 pointsForPoints = 1
 pointsForThree = 0.5
@@ -132,6 +134,6 @@ for index, row in games[:].iterrows():
 players = players.set_index('id')
 players = pd.merge(players, games, on='game_id')
 print players
-players.to_csv('./players.csv')
+players.to_csv(outputFile)
 
 

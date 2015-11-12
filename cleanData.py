@@ -5,7 +5,10 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 
-playersFile = './players.csv'
+year = 2016
+
+playersFile = './players' + str(year) + '.csv'
+outputFile = './players_clean' + str(year) + '.csv'
 
 players = pd.read_csv(playersFile)
 
@@ -18,4 +21,4 @@ players['Home'] = np.where(players['team'] == players['home_team'], 1, 0)
 
 del players['id']
 
-players.to_csv('./players_clean.csv')
+players.to_csv(outputFile)

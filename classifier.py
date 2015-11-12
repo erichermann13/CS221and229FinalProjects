@@ -6,7 +6,10 @@ import pandas as pd
 import numpy as np
 import math
 
-playersFile = './players_clean.csv'
+year = 2016
+
+playersFile = './players_clean' + str(year) + '.csv'
+outputFileName = './predictorData' + str(year) + '.csv'
 
 data = pd.read_csv(playersFile)
 
@@ -15,6 +18,8 @@ uniquePlayers = pd.unique(playerNames)
 
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
+minGames = 20
+minPoints = 5
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
@@ -35,13 +40,13 @@ for j in xrange(0, 50):
 		playerData = playerData[np.isfinite(playerData['MIN'])]
 		numElems = len(playerData)
 		# Note that a player's information is not super useful if they played only in a few games
-		if numElems > 20:
+		if numElems > minGames:
 			trainSize = int(3*numElems/4.0)
 			toTrain = playerData.head(trainSize)
 			yGenerator = playerData.tail(numElems - trainSize)
 			DKPoints = yGenerator['DKPoints'].mean()
 
-			if DKPoints > 5:
+			if DKPoints > minPoints:
 
 				playerAverages = toTrain.mean()
 				hFunction = np.dot(playerAverages, theta)
@@ -63,13 +68,13 @@ for aPlayer in testPlayers:
 	playerData = playerData[np.isfinite(playerData['MIN'])]
 	numElems = len(playerData)
 	# Note that a player's information is not super useful if they played only in a few games
-	if numElems > 20:
+	if numElems > minGames:
 		trainSize = int(3*numElems/4.0)
 		toTrain = playerData.head(trainSize)
 		yGenerator = playerData.tail(numElems - trainSize)
 		DKPoints = yGenerator['DKPoints'].mean()
 
-		if DKPoints > 5:
+		if DKPoints > minPoints:
 			playerAverages = toTrain.mean()
 			hFunction = np.dot(playerAverages, theta)
 			diff = DKPoints - hFunction
@@ -84,7 +89,7 @@ for elem in toStore:
 averageError /= numElems
 print "Average Error: %f" % averageError
 
-outfile = open('./predictorData.csv', 'wb')
+outfile = open(outputFileName, 'wb')
 writer = csv.writer(outfile)
 writer.writerow(['Player Name', 'Predicted Points', 'Actual Points', "Difference", "Pct Error"])
 writer.writerows(toStore)
