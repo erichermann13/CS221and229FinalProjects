@@ -6,4 +6,7 @@ Ideas/Thoughts for Regression Problem
 
 Ideas/Thoughts for Constraint Satisfaction Problem
 -Can we frame our project as a CSP?  Based on Percy’s lecture 10/26 I think so
--There’s some idea of “riskiness” of a player. Like if everyone chooses LeBron, there’s no marginal advantage to us of choosing LeBron.  In fact it’s advantageous to choose a lineup that has players that were chosen by less people, because we’re more likely to have a score that’s more different from that of others (sometimes that will be different better, sometimes different worse).  Can we maybe use publicly available ESPN fantasy basketball data to predict what players will be selected most frequently and use that to our advantage?
+-There’s some idea of “riskiness” of a player. Like if everyone chooses LeBron, there’s no marginal advantage to us of choosing LeBron.  
+In fact it’s advantageous to choose a lineup that has players that were chosen by less people, 
+because we’re more likely to have a score that’s more different from that of others (sometimes that will be different better, sometimes different worse).  
+Can we maybe use publicly available ESPN fantasy basketball data to predict what players will be selected most frequently and use that to our advantage?
