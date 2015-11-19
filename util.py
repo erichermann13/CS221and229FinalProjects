@@ -32,14 +32,20 @@ def get_sum_variable(csp, name, variables, maxSum):
     csp.add_variable(result, range(maxSum + 1))
     #domain = [(i, j) for i in range(maxSum +1) for j in range(maxSum +1)]
     prev_domain = []
+    relevant_values = {}
     for i, var in enumerate(variables):
+        #if name == "team":
+         #   relevant_values[var] = csp.values[var][0]
+        #else:
+         #   relevant_values[var] = csp.values[var]
+
         Ai = ('sum', name, i)
         if i == 0:
-            #the following lines are added and specific to the basketball team problem
-            if name == "team":
-                domain = [(0,0), (0, 1)]
-            else:
-                domain = [(0, i) for i in csp.values[var]]
+            #if name == "team":#the following lines are added and specific to the basketball team problem
+            #    domain = [(0,0), (0, 1)]
+            #else:
+            #    domain = [(0, i) for i in csp.values[var]]
+            domain = [(0, 1), (0, 0)]
         else:
             domain = []
             prev_results = [tup[1] for tup in prev_domain]
@@ -48,7 +54,8 @@ def get_sum_variable(csp, name, variables, maxSum):
                 if name == "team":
                     domain = [(prev_total, prev_total + 1)]
                 else:
-                    domain += [(prev_total, prev_total + i) for i in csp.values[var]]
+                    domain += [(prev_total, prev_total + i) for i in (0,1)]
+                    #domain += [(prev_total, prev_total + i) for i in csp.values[var]]
                 domain = list(set(domain))
         prev_domain = domain
         csp.add_variable(Ai, domain)
@@ -56,10 +63,11 @@ def get_sum_variable(csp, name, variables, maxSum):
     for i, var in enumerate(variables):
         #add processing factor
         Ai = ('sum', name, i)
-        if name != 'team':
-            csp.add_binary_factor(var, Ai, proc_factor)
-        else:
-            csp.add_binary_factor(var, Ai, lambda var, A: A[1] == (A[0] + var[0]))
+        #if name != 'team':
+        #    csp.add_binary_factor(var, Ai, proc_factor)
+        #else:
+        #    csp.add_binary_factor(var, Ai, lambda var, A: A[1] == (A[0] + var[0]))
+        csp.add_binary_factor(var, Ai, lambda var, A: A[1] == (A[0] + var[0]))
         if i > 0:
             #add consistency factor
             csp.add_binary_factor(('sum', name, i-1), Ai, cons_factor)

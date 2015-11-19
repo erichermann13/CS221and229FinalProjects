@@ -31,6 +31,7 @@ class BacktrackingSearch():
 
         # List of all solutions found.
         self.allAssignments = []
+        self.printable_assignments = []
 
     def print_stats(self):
         """
@@ -42,6 +43,12 @@ class BacktrackingSearch():
             print "First assignment took %d operations" % self.firstAssignmentNumOperations
         else:
             print "No solution was found."
+        print "all results were"
+        already_seen = []
+        for w in self.printable_assignments:
+            if not w in already_seen:
+                already_seen.append(w)
+                print w
 
     def get_delta_weight(self, assignment, var, val):
         """
@@ -113,7 +120,6 @@ class BacktrackingSearch():
         @param numAssigned: Number of currently assigned variables
         @param weight: The weight of the current partial assignment.
         """
-
         self.numOperations += 1
         assert weight > 0
         if numAssigned == self.csp.numVars:
@@ -132,6 +138,8 @@ class BacktrackingSearch():
                 self.optimalWeight = weight
 
                 self.optimalAssignment = newAssignment
+                printable_assignment = [(a, newAssignment[a]) for a in newAssignment.keys() if a[0] != 'sum' and newAssignment[a][0] == 1]
+                self.printable_assignments.append((printable_assignment, weight))
                 if self.firstAssignmentNumOperations == 0:
                     self.firstAssignmentNumOperations = self.numOperations
             return
