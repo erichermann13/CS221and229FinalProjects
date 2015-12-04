@@ -31,7 +31,6 @@ theta = [0]*(len(data.iloc[0]) - len(dataToIgnore))
 alpha = 0.0005
 
 
-sumValue = [0]*len(theta)
 for j in xrange(0, 50):
 	for aPlayer in trainPlayers:
 		playerData = data.loc[data['player'] == aPlayer]
