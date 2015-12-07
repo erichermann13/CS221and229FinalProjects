@@ -11,9 +11,15 @@ year = 2015
 playersFile = './players_clean' + str(year) + '.csv'
 outputFileName = './predictorData' + str(year) + '.csv'
 
+dataDeviationsFileName = "./avg_std_dev_cols" + str(year) + ".csv"
+
 thetaFileName = './modelParameters.csv'
 
 data = pd.read_csv(playersFile)
+
+dataDeviations = pd.read_csv(dataDeviationsFileName)
+pointsAverage = dataDeviations['DKPoints'][0]
+pointsStdDev = dataDeviations['DKPoints'][1]
 
 playerNames = data['player']
 uniquePlayers = pd.unique(playerNames)
@@ -47,7 +53,7 @@ alpha = 0.00005
 headers = []
 
 def convertBack(number):
-	return number*13.4010051 + 19.9297696
+	return number*pointsStdDev + pointsAverage
 
 def cleanPlayerData(aPlayer):
 	playerData = data.loc[data['player'] == aPlayer]
@@ -91,7 +97,8 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 				else:
 					diff = convertBack(DKPoints) - convertBack(hFunction)
 					pctError = abs(diff)/convertBack(DKPoints)
-					# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
+					# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
+					# % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
 					toOutput.append([aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError])
 
 
