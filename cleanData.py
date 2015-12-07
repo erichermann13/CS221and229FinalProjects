@@ -5,7 +5,7 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 
-year = 2016
+year = 2015
 
 playersFile = './players' + str(year) + '.csv'
 outputFile = './players_clean' + str(year) + '.csv'

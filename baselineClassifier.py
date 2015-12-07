@@ -11,6 +11,8 @@ year = 2015
 playersFile = './players_clean' + str(year) + '.csv'
 outputFileName = './predictorData' + str(year) + '.csv'
 
+thetaFileName = './modelParameters.csv'
+
 data = pd.read_csv(playersFile)
 
 playerNames = data['player']
@@ -18,8 +20,8 @@ uniquePlayers = pd.unique(playerNames)
 
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
-minGames = 10
-minPoints = 5
+minGames = 20
+minPoints = 20
 numPreviousGamesToConsider = 5
 numIterations = 5
 
@@ -40,8 +42,12 @@ currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
 
 dataToIgnore = newDataToIgnore
 
-theta = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1))*(numPreviousGamesToConsider - numPreviousGamesToConsider + 1) + len(currGameData))
-alpha = 0.005
+theta = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1)) + len(currGameData))
+alpha = 0.00005
+headers = []
+
+def convertBack(number):
+	return number*13.4010051 + 19.9297696
 
 def cleanPlayerData(aPlayer):
 	playerData = data.loc[data['player'] == aPlayer]
@@ -64,6 +70,10 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 
 				playerAverages = trainData.mean()
 
+				# toConsider = 'DKPoints'
+				# for i in xrange(0, numPreviousGamesToConsider):
+				# 	playerAverages[toConsider + str(i)] = trainData.iloc[i][toConsider]
+
 				# columns = trainData.columns.values.tolist()
 				# for col in columns:
 				# 	for i in xrange(4, numPreviousGamesToConsider):
@@ -72,16 +82,17 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 				for newRow in currGameData:
 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
 
+				headers = playerAverages.axes[0]
+
 				hFunction = np.dot(playerAverages, theta)
 				if trainBool:
 					for i in xrange(0, len(theta)):
-						theta[i] = theta[i] + alpha*(DKPoints - hFunction)*playerAverages[i]
+						theta[i] = theta[i] + alpha*(convertBack(DKPoints) - convertBack(hFunction))*playerAverages[i]
 				else:
-					diff = DKPoints - hFunction
-					pctError = abs(diff)/DKPoints
-					# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
-					# % (aPlayer, hFunction, DKPoints, diff, pctError)
-					toOutput.append([aPlayer, hFunction, DKPoints, diff, pctError])
+					diff = convertBack(DKPoints) - convertBack(hFunction)
+					pctError = abs(diff)/convertBack(DKPoints)
+					# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
+					toOutput.append([aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError])
 
 
 
@@ -125,6 +136,21 @@ outfile = open(outputFileName, 'wb')
 writer = csv.writer(outfile)
 writer.writerow(['Player Name', 'Predicted Points', 'Actual Points', "Difference", "Pct Error"])
 writer.writerows(toStore)
+
+newHeaders = []
+for val in headers:
+	newHeaders.append(val)
+headers = newHeaders
+
+headers = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 'MIN', 'OREB', 
+'PF', 'PTS', 'REB', 'STL', 'TO', 'home_team_score', 'visit_team_score', 'Home', 'team_win_pct', 'opponent_win_pct', 
+'HomeCurr', 'team_win_pctCurr', 'opponent_win_pctCurr']
+
+newOutfile = open(thetaFileName, 'wb')
+writer = csv.writer(newOutfile)
+writer.writerow(headers)
+writer.writerow(theta)
+
 
 
 
