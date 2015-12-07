@@ -5,6 +5,20 @@ id,away_team_losses,away_team_wins,date,game_id,home_team,home_team_losses,home_
 400827947,3,1,2015-11-04,400827947,Indiana Pacers,3,100,2,Boston Celtics,98
 400827963,2,3,2015-11-06,400827963,Boston Celtics,3,118,2,Washington Wizards,98
 400827997,3,3,2015-11-10,400827997,Milwaukee Bucks,4,83,4,Boston Celtics,99
+400828003,4,5,2015-11-11,400828003,Boston Celtics,4,91,3,Indiana Pacers,102
+400828016,3,8,2015-11-13,400828016,Boston Celtics,4,106,4,Atlanta Hawks,93
+400828036,4,5,2015-11-15,400828036,Oklahoma City Thunder,4,85,6,Boston Celtics,100
+400828041,4,6,2015-11-16,400828041,Houston Rockets,7,95,4,Boston Celtics,111
+400828055,4,8,2015-11-18,400828055,Boston Celtics,5,102,6,Dallas Mavericks,106
+400828066,11,2,2015-11-20,400828066,Boston Celtics,5,120,7,Brooklyn Nets,95
+400828084,6,7,2015-11-22,400828084,Brooklyn Nets,11,111,3,Boston Celtics,101
+400828097,7,7,2015-11-24,400828097,Atlanta Hawks,6,121,10,Boston Celtics,97
+400828104,16,0,2015-11-25,400828104,Boston Celtics,7,84,8,Philadelphia 76ers,80
+400828116,7,6,2015-11-27,400828116,Boston Celtics,7,111,9,Washington Wizards,78
+400828136,8,9,2015-11-29,400828136,Orlando Magic,8,110,9,Boston Celtics,91
+400828142,8,10,2015-11-30,400828142,Miami Heat,6,95,10,Boston Celtics,105
+400828169,8,11,2015-12-03,400828169,Sacramento Kings,13,97,7,Boston Celtics,114
+400828183,9,11,2015-12-05,400828183,San Antonio Spurs,4,108,17,Boston Celtics,105
 400827893,0,2,2015-10-28,400827893,Brooklyn Nets,1,100,0,Chicago Bulls,115
 400827915,2,0,2015-10-30,400827915,San Antonio Spurs,1,102,1,Brooklyn Nets,75
 400827923,3,0,2015-10-31,400827923,Memphis Grizzlies,1,101,2,Brooklyn Nets,91
@@ -12,6 +26,17 @@ id,away_team_losses,away_team_wins,date,game_id,home_team,home_team_losses,home_
 400827949,5,0,2015-11-04,400827949,Atlanta Hawks,1,101,5,Brooklyn Nets,87
 400827964,4,1,2015-11-06,400827964,Brooklyn Nets,6,98,0,Los Angeles Lakers,104
 400827976,7,0,2015-11-07,400827976,Milwaukee Bucks,3,94,4,Brooklyn Nets,86
+400828006,7,1,2015-11-11,400828006,Houston Rockets,4,98,4,Brooklyn Nets,106
+400828024,8,1,2015-11-13,400828024,Sacramento Kings,7,111,3,Brooklyn Nets,109
+400828031,9,1,2015-11-14,400828031,Golden State Warriors,0,107,11,Brooklyn Nets,99
+400828046,5,8,2015-11-17,400828046,Brooklyn Nets,9,90,2,Atlanta Hawks,88
+400828052,10,2,2015-11-18,400828052,Charlotte Hornets,6,116,6,Brooklyn Nets,111
+400828110,12,3,2015-11-25,400828110,Oklahoma City Thunder,6,110,10,Brooklyn Nets,99
+400828127,13,3,2015-11-28,400828127,Cleveland Cavaliers,4,90,13,Brooklyn Nets,88
+400828135,9,8,2015-11-29,400828135,Brooklyn Nets,13,87,4,Detroit Pistons,83
+400828151,10,8,2015-12-01,400828151,Brooklyn Nets,13,94,5,Phoenix Suns,91
+400828170,14,5,2015-12-04,400828170,New York Knicks,10,108,10,Brooklyn Nets,91
+400828187,0,22,2015-12-06,400828187,Brooklyn Nets,15,98,5,Golden State Warriors,114
 400827899,0,1,2015-10-28,400827899,Milwaukee Bucks,1,97,0,New York Knicks,122
 400827906,1,1,2015-10-29,400827906,New York Knicks,1,101,1,Atlanta Hawks,112
 400827921,1,2,2015-10-31,400827921,Washington Wizards,1,110,2,New York Knicks,117
@@ -20,18 +45,54 @@ id,away_team_losses,away_team_wins,date,game_id,home_team,home_team_losses,home_
 400827966,3,3,2015-11-06,400827966,New York Knicks,4,92,2,Milwaukee Bucks,99
 400827982,5,1,2015-11-08,400827982,New York Knicks,4,99,3,Los Angeles Lakers,95
 400827996,4,4,2015-11-10,400827996,Toronto Raptors,3,109,5,New York Knicks,111
+400828000,5,4,2015-11-11,400828000,Charlotte Hornets,4,95,4,New York Knicks,93
+400828017,1,8,2015-11-13,400828017,New York Knicks,6,84,4,Cleveland Cavaliers,90
+400828032,9,1,2015-11-15,400828032,New York Knicks,6,95,5,New Orleans Pelicans,87
+400828049,6,5,2015-11-17,400828049,New York Knicks,6,102,6,Charlotte Hornets,94
+400828070,6,7,2015-11-20,400828070,Oklahoma City Thunder,6,90,7,New York Knicks,93
+400828081,6,8,2015-11-21,400828081,Houston Rockets,9,102,5,New York Knicks,107
+400828091,7,8,2015-11-23,400828091,Miami Heat,4,95,9,New York Knicks,78
+400828103,8,8,2015-11-25,400828103,Orlando Magic,8,100,7,New York Knicks,91
+400828117,5,10,2015-11-27,400828117,New York Knicks,9,78,8,Miami Heat,97
+400828139,10,7,2015-11-29,400828139,New York Knicks,10,111,8,Houston Rockets,116
+400828158,19,1,2015-12-02,400828158,New York Knicks,10,99,9,Philadelphia 76ers,87
+400828182,11,10,2015-12-05,400828182,Milwaukee Bucks,13,106,8,New York Knicks,91
 400827910,1,1,2015-10-30,400827910,Philadelphia 76ers,2,71,0,Utah Jazz,99
 400827933,1,3,2015-11-02,400827933,Philadelphia 76ers,3,100,0,Cleveland Cavaliers,107
 400827952,4,0,2015-11-04,400827952,Milwaukee Bucks,3,91,2,Philadelphia 76ers,87
 400827965,5,0,2015-11-06,400827965,Cleveland Cavaliers,1,108,5,Philadelphia 76ers,102
 400827974,4,3,2015-11-07,400827974,Philadelphia 76ers,6,97,0,Orlando Magic,105
 400827987,3,5,2015-11-09,400827987,Philadelphia 76ers,7,88,0,Chicago Bulls,111
+400828002,3,6,2015-11-11,400828002,Philadelphia 76ers,8,103,0,Toronto Raptors,119
+400828021,9,0,2015-11-13,400828021,Oklahoma City Thunder,3,102,6,Philadelphia 76ers,85
+400828029,10,0,2015-11-14,400828029,San Antonio Spurs,2,92,7,Philadelphia 76ers,83
+400828039,4,7,2015-11-16,400828039,Philadelphia 76ers,11,86,0,Dallas Mavericks,92
+400828054,5,7,2015-11-18,400828054,Philadelphia 76ers,12,85,0,Indiana Pacers,112
+400828065,13,0,2015-11-20,400828065,Charlotte Hornets,6,113,7,Philadelphia 76ers,88
+400828080,14,0,2015-11-21,400828080,Miami Heat,4,96,8,Philadelphia 76ers,91
+400828093,15,0,2015-11-23,400828093,Minnesota Timberwolves,8,100,6,Philadelphia 76ers,95
+400828119,17,0,2015-11-27,400828119,Houston Rockets,10,116,6,Philadelphia 76ers,114
+400828138,18,0,2015-11-29,400828138,Memphis Grizzlies,8,92,10,Philadelphia 76ers,84
+400828150,15,2,2015-12-01,400828150,Philadelphia 76ers,18,103,1,Los Angeles Lakers,91
+400828176,13,8,2015-12-05,400828176,Philadelphia 76ers,20,105,1,Denver Nuggets,108
 400827896,1,0,2015-10-28,400827896,Toronto Raptors,0,106,1,Indiana Pacers,99
 400827929,3,0,2015-11-01,400827929,Toronto Raptors,0,106,3,Milwaukee Bucks,87
 400827944,0,4,2015-11-03,400827944,Dallas Mavericks,2,91,2,Toronto Raptors,102
 400827953,0,5,2015-11-04,400827953,Oklahoma City Thunder,2,98,3,Toronto Raptors,103
 400827962,1,5,2015-11-06,400827962,Orlando Magic,4,92,2,Toronto Raptors,87
 400827983,2,5,2015-11-08,400827983,Miami Heat,3,96,4,Toronto Raptors,76
+400828018,8,1,2015-11-13,400828018,Toronto Raptors,3,100,7,New Orleans Pelicans,81
+400828037,4,7,2015-11-15,400828037,Sacramento Kings,7,107,4,Toronto Raptors,101
+400828051,5,7,2015-11-17,400828051,Golden State Warriors,0,115,12,Toronto Raptors,110
+400828060,6,7,2015-11-18,400828060,Utah Jazz,5,93,6,Toronto Raptors,89
+400828075,6,8,2015-11-20,400828075,Los Angeles Lakers,10,91,2,Toronto Raptors,102
+400828083,6,9,2015-11-22,400828083,Los Angeles Clippers,7,80,6,Toronto Raptors,91
+400828106,4,11,2015-11-25,400828106,Toronto Raptors,6,103,10,Cleveland Cavaliers,99
+400828126,6,11,2015-11-28,400828126,Washington Wizards,8,82,6,Toronto Raptors,84
+400828137,9,8,2015-11-29,400828137,Toronto Raptors,7,102,11,Phoenix Suns,107
+400828159,7,12,2015-12-02,400828159,Atlanta Hawks,9,86,12,Toronto Raptors,96
+400828165,13,7,2015-12-03,400828165,Toronto Raptors,8,105,12,Denver Nuggets,106
+400828177,0,21,2015-12-05,400828177,Toronto Raptors,9,109,12,Golden State Warriors,112
 400827890,1,0,2015-10-27,400827890,Golden State Warriors,0,111,1,New Orleans Pelicans,95
 400827917,0,2,2015-10-30,400827917,Houston Rockets,2,92,0,Golden State Warriors,112
 400827922,0,3,2015-10-31,400827922,New Orleans Pelicans,3,120,0,Golden State Warriors,134
@@ -40,74 +101,204 @@ id,away_team_losses,away_team_wins,date,game_id,home_team,home_team_losses,home_
 400827970,4,2,2015-11-06,400827970,Golden State Warriors,0,119,6,Denver Nuggets,104
 400827979,0,7,2015-11-07,400827979,Sacramento Kings,6,94,1,Golden State Warriors,103
 400827991,2,5,2015-11-09,400827991,Golden State Warriors,0,109,8,Detroit Pistons,95
+400828007,0,9,2015-11-11,400828007,Memphis Grizzlies,6,84,3,Golden State Warriors,100
+400828012,0,10,2015-11-12,400828012,Minnesota Timberwolves,4,116,4,Golden State Warriors,129
+400828064,0,13,2015-11-19,400828064,Los Angeles Clippers,5,117,6,Golden State Warriors,124
+400828074,4,8,2015-11-20,400828074,Golden State Warriors,0,106,14,Chicago Bulls,94
+400828087,0,15,2015-11-22,400828087,Denver Nuggets,8,105,6,Golden State Warriors,118
+400828101,12,2,2015-11-24,400828101,Golden State Warriors,0,111,16,Los Angeles Lakers,77
+400828123,0,17,2015-11-27,400828123,Phoenix Suns,9,116,7,Golden State Warriors,135
+400828132,12,6,2015-11-28,400828132,Golden State Warriors,0,120,18,Sacramento Kings,101
+400828146,0,19,2015-11-30,400828146,Utah Jazz,8,103,8,Golden State Warriors,106
+400828155,0,20,2015-12-02,400828155,Charlotte Hornets,8,99,10,Golden State Warriors,116
 400827903,0,1,2015-10-28,400827903,Sacramento Kings,1,104,0,Los Angeles Clippers,111
 400827907,1,1,2015-10-29,400827907,Los Angeles Clippers,0,104,2,Dallas Mavericks,88
 400827925,2,1,2015-10-31,400827925,Los Angeles Clippers,0,114,3,Sacramento Kings,109
 400827939,2,2,2015-11-02,400827939,Los Angeles Clippers,0,102,4,Phoenix Suns,96
 400827980,3,4,2015-11-07,400827980,Los Angeles Clippers,2,105,4,Houston Rockets,109
 400827992,5,3,2015-11-09,400827992,Los Angeles Clippers,2,94,5,Memphis Grizzlies,92
+400828005,3,5,2015-11-11,400828005,Dallas Mavericks,4,118,4,Los Angeles Clippers,108
+400828013,4,5,2015-11-12,400828013,Phoenix Suns,4,118,4,Los Angeles Clippers,104
+400828025,4,5,2015-11-14,400828025,Los Angeles Clippers,4,101,6,Detroit Pistons,96
+400828073,6,6,2015-11-20,400828073,Portland Trail Blazers,9,102,5,Los Angeles Clippers,91
+400828099,7,7,2015-11-24,400828099,Denver Nuggets,9,94,6,Los Angeles Clippers,111
+400828113,7,7,2015-11-25,400828113,Los Angeles Clippers,8,91,7,Utah Jazz,102
+400828125,12,4,2015-11-27,400828125,Los Angeles Clippers,8,111,8,New Orleans Pelicans,90
+400828134,9,8,2015-11-29,400828134,Los Angeles Clippers,8,107,9,Minnesota Timberwolves,99
+400828148,11,7,2015-11-30,400828148,Los Angeles Clippers,8,102,10,Portland Trail Blazers,87
+400828163,5,12,2015-12-02,400828163,Los Angeles Clippers,9,91,10,Indiana Pacers,103
+400828185,9,11,2015-12-05,400828185,Los Angeles Clippers,9,103,11,Orlando Magic,101
 400827904,0,1,2015-10-28,400827904,Los Angeles Lakers,1,111,0,Minnesota Timberwolves,112
 400827918,2,0,2015-10-30,400827918,Sacramento Kings,1,132,1,Los Angeles Lakers,114
 400827932,1,2,2015-11-01,400827932,Los Angeles Lakers,3,93,0,Dallas Mavericks,103
 400827946,2,2,2015-11-03,400827946,Los Angeles Lakers,4,109,0,Denver Nuggets,120
 400827995,6,1,2015-11-10,400827995,Miami Heat,3,101,5,Los Angeles Lakers,88
+400828001,7,1,2015-11-11,400828001,Orlando Magic,5,101,4,Los Angeles Lakers,99
+400828022,8,1,2015-11-13,400828022,Dallas Mavericks,4,90,5,Los Angeles Lakers,82
+400828038,5,5,2015-11-15,400828038,Los Angeles Lakers,8,97,2,Detroit Pistons,85
+400828044,9,2,2015-11-16,400828044,Phoenix Suns,4,120,6,Los Angeles Lakers,101
+400828088,9,6,2015-11-22,400828088,Los Angeles Lakers,11,93,2,Portland Trail Blazers,107
+400828131,13,2,2015-11-28,400828131,Portland Trail Blazers,10,108,7,Los Angeles Lakers,96
+400828140,5,11,2015-11-29,400828140,Los Angeles Lakers,14,103,2,Indiana Pacers,107
+400828156,15,3,2015-12-02,400828156,Washington Wizards,9,104,7,Los Angeles Lakers,108
+400828173,16,3,2015-12-04,400828173,Atlanta Hawks,9,100,13,Los Angeles Lakers,87
+400828188,17,3,2015-12-06,400828188,Detroit Pistons,9,111,12,Los Angeles Lakers,91
 400827901,0,1,2015-10-28,400827901,Phoenix Suns,1,95,0,Dallas Mavericks,111
 400827919,1,1,2015-10-30,400827919,Phoenix Suns,1,110,1,Portland Trail Blazers,92
 400827924,1,2,2015-10-31,400827924,Portland Trail Blazers,2,90,1,Phoenix Suns,101
 400827954,4,1,2015-11-04,400827954,Phoenix Suns,2,118,3,Sacramento Kings,97
 400827969,1,4,2015-11-06,400827969,Phoenix Suns,3,92,3,Detroit Pistons,100
 400827984,4,3,2015-11-08,400827984,Oklahoma City Thunder,3,124,4,Phoenix Suns,103
+400828030,5,5,2015-11-14,400828030,Phoenix Suns,4,105,5,Denver Nuggets,81
+400828061,3,8,2015-11-18,400828061,Phoenix Suns,5,97,6,Chicago Bulls,103
+400828072,5,7,2015-11-20,400828072,Denver Nuggets,7,107,6,Phoenix Suns,114
+400828085,6,7,2015-11-22,400828085,New Orleans Pelicans,11,122,3,Phoenix Suns,116
+400828094,7,7,2015-11-23,400828094,San Antonio Spurs,3,98,11,Phoenix Suns,84
+400828112,11,4,2015-11-25,400828112,Phoenix Suns,8,114,7,New Orleans Pelicans,120
+400828157,11,8,2015-12-02,400828157,Detroit Pistons,9,127,10,Phoenix Suns,122
+400828171,12,8,2015-12-04,400828171,Washington Wizards,9,109,8,Phoenix Suns,106
+400828186,13,8,2015-12-06,400828186,Memphis Grizzlies,9,95,12,Phoenix Suns,93
 400827945,2,3,2015-11-03,400827945,Sacramento Kings,3,89,1,Memphis Grizzlies,103
 400827971,3,3,2015-11-06,400827971,Sacramento Kings,5,110,1,Houston Rockets,116
 400827990,2,5,2015-11-09,400827990,Sacramento Kings,7,88,1,San Antonio Spurs,106
+400828009,3,5,2015-11-11,400828009,Sacramento Kings,7,101,2,Detroit Pistons,92
+400828056,8,4,2015-11-18,400828056,Atlanta Hawks,5,103,9,Sacramento Kings,97
+400828062,9,4,2015-11-19,400828062,Miami Heat,4,116,7,Sacramento Kings,109
+400828076,9,5,2015-11-21,400828076,Orlando Magic,7,91,6,Sacramento Kings,97
+400828089,10,5,2015-11-23,400828089,Charlotte Hornets,6,127,8,Sacramento Kings,122
+400828108,10,6,2015-11-25,400828108,Milwaukee Bucks,9,118,6,Sacramento Kings,129
+400828124,8,8,2015-11-27,400828124,Sacramento Kings,11,91,6,Minnesota Timberwolves,101
+400828147,8,10,2015-11-30,400828147,Sacramento Kings,12,112,7,Dallas Mavericks,98
+400828180,14,7,2015-12-05,400828180,Houston Rockets,11,120,10,Sacramento Kings,113
+400828190,15,7,2015-12-06,400828190,Oklahoma City Thunder,8,98,12,Sacramento Kings,95
 400827889,1,0,2015-10-27,400827889,Chicago Bulls,0,97,1,Cleveland Cavaliers,95
 400827912,1,2,2015-10-30,400827912,Detroit Pistons,0,98,3,Chicago Bulls,94
 400827930,3,0,2015-11-01,400827930,Chicago Bulls,1,92,3,Orlando Magic,87
 400827940,2,3,2015-11-03,400827940,Charlotte Hornets,3,130,1,Chicago Bulls,105
 400827957,3,3,2015-11-05,400827957,Chicago Bulls,2,104,4,Oklahoma City Thunder,98
 400827972,2,3,2015-11-07,400827972,Chicago Bulls,3,93,4,Minnesota Timberwolves,102
+400828019,5,4,2015-11-13,400828019,Chicago Bulls,3,102,6,Charlotte Hornets,97
+400828040,5,6,2015-11-16,400828040,Chicago Bulls,3,96,7,Indiana Pacers,95
+400828100,4,9,2015-11-24,400828100,Portland Trail Blazers,10,88,6,Chicago Bulls,93
+400828118,5,9,2015-11-27,400828118,Indiana Pacers,5,104,10,Chicago Bulls,92
+400828144,4,14,2015-11-30,400828144,Chicago Bulls,5,92,10,San Antonio Spurs,89
+400828160,13,6,2015-12-02,400828160,Chicago Bulls,5,99,11,Denver Nuggets,90
+400828179,8,11,2015-12-05,400828179,Chicago Bulls,6,96,11,Charlotte Hornets,102
 400827898,1,1,2015-10-28,400827898,Memphis Grizzlies,1,76,0,Cleveland Cavaliers,106
 400827908,1,1,2015-10-30,400827908,Cleveland Cavaliers,1,102,2,Miami Heat,92
 400827981,4,3,2015-11-08,400827981,Cleveland Cavaliers,1,101,6,Indiana Pacers,97
 400827993,3,4,2015-11-10,400827993,Cleveland Cavaliers,1,118,7,Utah Jazz,114
+400828028,2,8,2015-11-14,400828028,Milwaukee Bucks,5,108,5,Cleveland Cavaliers,105
+400828047,3,8,2015-11-17,400828047,Detroit Pistons,5,104,6,Cleveland Cavaliers,99
+400828063,7,5,2015-11-19,400828063,Cleveland Cavaliers,3,115,9,Milwaukee Bucks,100
+400828078,6,9,2015-11-21,400828078,Cleveland Cavaliers,3,109,10,Atlanta Hawks,97
+400828090,8,6,2015-11-23,400828090,Cleveland Cavaliers,3,117,11,Orlando Magic,103
+400828114,4,12,2015-11-27,400828114,Charlotte Hornets,7,90,9,Cleveland Cavaliers,95
+400828149,8,7,2015-12-01,400828149,Cleveland Cavaliers,5,85,13,Washington Wizards,97
+400828175,6,13,2015-12-04,400828175,New Orleans Pelicans,15,114,5,Cleveland Cavaliers,108
+400828178,7,13,2015-12-05,400828178,Miami Heat,6,99,12,Cleveland Cavaliers,84
 400827888,0,1,2015-10-27,400827888,Atlanta Hawks,1,94,0,Detroit Pistons,106
 400827894,1,0,2015-10-28,400827894,Detroit Pistons,0,92,2,Utah Jazz,87
 400827941,3,1,2015-11-03,400827941,Detroit Pistons,1,82,3,Indiana Pacers,94
 400827985,1,5,2015-11-08,400827985,Portland Trail Blazers,3,103,4,Detroit Pistons,120
+400828068,5,7,2015-11-20,400828068,Minnesota Timberwolves,8,86,5,Detroit Pistons,96
+400828079,4,6,2015-11-21,400828079,Detroit Pistons,6,95,7,Washington Wizards,97
+400828092,7,7,2015-11-23,400828092,Milwaukee Bucks,8,109,6,Detroit Pistons,88
+400828105,5,9,2015-11-25,400828105,Detroit Pistons,7,104,8,Miami Heat,81
+400828121,8,8,2015-11-27,400828121,Oklahoma City Thunder,6,103,11,Detroit Pistons,87
+400828141,11,7,2015-11-30,400828141,Detroit Pistons,9,116,9,Houston Rockets,105
+400828172,13,7,2015-12-04,400828172,Detroit Pistons,9,102,11,Milwaukee Bucks,95
 400827905,1,1,2015-10-29,400827905,Indiana Pacers,2,103,0,Memphis Grizzlies,112
 400827920,1,2,2015-10-31,400827920,Indiana Pacers,3,76,0,Utah Jazz,97
 400827967,3,3,2015-11-06,400827967,Indiana Pacers,3,90,3,Miami Heat,87
 400827986,5,3,2015-11-09,400827986,Indiana Pacers,4,97,4,Orlando Magic,84
+400828014,5,4,2015-11-13,400828014,Indiana Pacers,4,107,6,Minnesota Timberwolves,103
+400828077,8,5,2015-11-21,400828077,Indiana Pacers,5,123,8,Milwaukee Bucks,86
+400828096,5,9,2015-11-24,400828096,Washington Wizards,5,106,6,Indiana Pacers,123
+400828168,6,12,2015-12-03,400828168,Portland Trail Blazers,12,123,8,Indiana Pacers,111
+400828184,7,12,2015-12-05,400828184,Utah Jazz,9,122,9,Indiana Pacers,119
 400827914,0,2,2015-10-30,400827914,Milwaukee Bucks,2,113,0,Washington Wizards,118
+400828008,5,4,2015-11-11,400828008,Denver Nuggets,4,103,4,Milwaukee Bucks,102
+400828045,6,5,2015-11-17,400828045,Washington Wizards,4,115,5,Milwaukee Bucks,86
+400828115,10,6,2015-11-27,400828115,Orlando Magic,8,114,8,Milwaukee Bucks,90
+400828133,11,6,2015-11-29,400828133,Charlotte Hornets,7,87,10,Milwaukee Bucks,82
+400828145,12,6,2015-11-30,400828145,Milwaukee Bucks,11,92,7,Denver Nuggets,74
+400828162,12,7,2015-12-02,400828162,San Antonio Spurs,4,95,15,Milwaukee Bucks,70
 400827959,3,2,2015-11-05,400827959,Dallas Mavericks,3,94,2,Charlotte Hornets,108
 400827975,6,0,2015-11-07,400827975,Dallas Mavericks,3,107,3,New Orleans Pelicans,98
 400827999,4,3,2015-11-10,400827999,New Orleans Pelicans,6,120,1,Dallas Mavericks,105
+400828027,4,6,2015-11-14,400828027,Houston Rockets,6,98,4,Dallas Mavericks,110
+400828071,6,6,2015-11-20,400828071,Dallas Mavericks,4,102,9,Utah Jazz,93
+400828086,5,9,2015-11-22,400828086,Oklahoma City Thunder,6,117,8,Dallas Mavericks,114
+400828098,6,9,2015-11-24,400828098,Memphis Grizzlies,7,110,8,Dallas Mavericks,96
+400828111,7,9,2015-11-25,400828111,San Antonio Spurs,3,88,12,Dallas Mavericks,83
+400828128,11,6,2015-11-28,400828128,Dallas Mavericks,7,92,10,Denver Nuggets,81
+400828154,8,11,2015-12-01,400828154,Portland Trail Blazers,12,112,7,Dallas Mavericks,115
+400828174,11,9,2015-12-04,400828174,Dallas Mavericks,9,96,11,Houston Rockets,100
+400828189,9,12,2015-12-06,400828189,Washington Wizards,10,104,8,Dallas Mavericks,116
 400827897,0,1,2015-10-28,400827897,Houston Rockets,1,85,0,Denver Nuggets,105
 400827928,3,0,2015-11-01,400827928,Miami Heat,1,109,2,Houston Rockets,89
 400827936,1,3,2015-11-02,400827936,Houston Rockets,3,110,1,Oklahoma City Thunder,105
 400827951,4,1,2015-11-04,400827951,Houston Rockets,3,119,2,Orlando Magic,114
+400828023,5,4,2015-11-13,400828023,Denver Nuggets,4,107,5,Houston Rockets,98
+400828057,9,4,2015-11-18,400828057,Houston Rockets,7,108,5,Portland Trail Blazers,103
+400828067,8,5,2015-11-20,400828067,Memphis Grizzlies,6,96,7,Houston Rockets,84
+400828107,7,9,2015-11-25,400828107,Houston Rockets,10,93,5,Memphis Grizzlies,102
+400828161,15,4,2015-12-02,400828161,Houston Rockets,11,108,8,New Orleans Pelicans,101
 400827961,3,3,2015-11-05,400827961,Portland Trail Blazers,2,115,4,Memphis Grizzlies,96
 400827978,4,3,2015-11-07,400827978,Utah Jazz,2,89,4,Memphis Grizzlies,79
+400828020,6,4,2015-11-13,400828020,Memphis Grizzlies,6,101,4,Portland Trail Blazers,100
+400828033,6,5,2015-11-15,400828033,Minnesota Timberwolves,6,106,4,Memphis Grizzlies,114
+400828042,5,6,2015-11-16,400828042,Memphis Grizzlies,6,122,6,Oklahoma City Thunder,114
+400828082,7,7,2015-11-21,400828082,San Antonio Spurs,3,92,10,Memphis Grizzlies,82
+400828120,7,11,2015-11-27,400828120,Memphis Grizzlies,8,101,9,Atlanta Hawks,116
+400828153,8,11,2015-12-01,400828153,New Orleans Pelicans,14,104,4,Memphis Grizzlies,113
+400828167,4,16,2015-12-03,400828167,Memphis Grizzlies,9,83,11,San Antonio Spurs,103
 400827902,2,0,2015-10-28,400827902,Portland Trail Blazers,0,112,1,New Orleans Pelicans,94
 400827943,3,1,2015-11-03,400827943,New Orleans Pelicans,4,94,0,Orlando Magic,103
 400827968,1,6,2015-11-06,400827968,New Orleans Pelicans,5,115,0,Atlanta Hawks,121
+400828004,7,1,2015-11-11,400828004,Atlanta Hawks,2,106,8,New Orleans Pelicans,98
+400828050,5,6,2015-11-17,400828050,New Orleans Pelicans,10,98,1,Denver Nuggets,115
+400828058,11,1,2015-11-18,400828058,Oklahoma City Thunder,5,110,7,New Orleans Pelicans,103
+400828069,3,9,2015-11-20,400828069,New Orleans Pelicans,11,104,2,San Antonio Spurs,90
+400828130,13,4,2015-11-28,400828130,Utah Jazz,7,101,8,New Orleans Pelicans,87
 400827900,1,0,2015-10-28,400827900,Oklahoma City Thunder,0,112,1,San Antonio Spurs,106
 400827948,2,3,2015-11-04,400827948,Washington Wizards,1,102,3,San Antonio Spurs,99
 400827977,4,2,2015-11-07,400827977,San Antonio Spurs,2,114,4,Charlotte Hornets,94
+400828010,2,6,2015-11-11,400828010,Portland Trail Blazers,5,101,4,San Antonio Spurs,113
+400828043,8,4,2015-11-16,400828043,San Antonio Spurs,2,93,8,Portland Trail Blazers,80
+400828059,6,6,2015-11-18,400828059,San Antonio Spurs,2,109,9,Denver Nuggets,98
+400828122,3,13,2015-11-27,400828122,Denver Nuggets,10,80,6,San Antonio Spurs,91
+400828129,8,11,2015-11-28,400828129,San Antonio Spurs,3,108,14,Atlanta Hawks,88
 400827913,2,0,2015-10-30,400827913,Atlanta Hawks,1,97,2,Charlotte Hornets,94
 400827926,1,3,2015-11-01,400827926,Charlotte Hornets,3,92,0,Atlanta Hawks,94
 400827942,1,4,2015-11-03,400827942,Miami Heat,2,92,2,Atlanta Hawks,98
 400827973,3,3,2015-11-07,400827973,Atlanta Hawks,1,114,7,Washington Wizards,99
 400827988,2,4,2015-11-09,400827988,Atlanta Hawks,2,107,7,Minnesota Timberwolves,117
+400828035,5,5,2015-11-15,400828035,Atlanta Hawks,4,96,8,Utah Jazz,97
+400828109,7,10,2015-11-25,400828109,Minnesota Timberwolves,8,99,7,Atlanta Hawks,95
+400828143,7,11,2015-11-30,400828143,Atlanta Hawks,8,106,12,Oklahoma City Thunder,100
 400827895,1,0,2015-10-28,400827895,Miami Heat,0,104,1,Charlotte Hornets,94
 400827998,4,3,2015-11-10,400827998,Minnesota Timberwolves,3,95,4,Charlotte Hornets,104
+400828034,7,4,2015-11-15,400828034,Charlotte Hornets,5,106,5,Portland Trail Blazers,94
+400828102,6,6,2015-11-25,400828102,Charlotte Hornets,6,101,9,Washington Wizards,87
 400827958,2,3,2015-11-05,400827958,Minnesota Timberwolves,2,84,2,Miami Heat,96
+400828011,4,4,2015-11-12,400828011,Miami Heat,3,92,6,Utah Jazz,91
+400828048,6,5,2015-11-17,400828048,Miami Heat,4,91,6,Minnesota Timberwolves,103
+400828164,8,11,2015-12-03,400828164,Miami Heat,6,97,11,Oklahoma City Thunder,95
 400827891,0,1,2015-10-28,400827891,Orlando Magic,1,87,0,Washington Wizards,88
 400827909,0,2,2015-10-30,400827909,Orlando Magic,2,136,0,Oklahoma City Thunder,139
+400828015,5,4,2015-11-13,400828015,Orlando Magic,5,102,5,Utah Jazz,93
+400828026,6,5,2015-11-14,400828026,Washington Wizards,4,108,4,Orlando Magic,99
+400828053,7,5,2015-11-18,400828053,Orlando Magic,6,104,6,Minnesota Timberwolves,101
+400828152,8,10,2015-12-01,400828152,Minnesota Timberwolves,10,93,8,Orlando Magic,96
+400828166,8,11,2015-12-03,400828166,Utah Jazz,9,94,8,Orlando Magic,103
 400827994,3,5,2015-11-10,400827994,Washington Wizards,4,101,3,Oklahoma City Thunder,125
 400827916,0,2,2015-10-30,400827916,Denver Nuggets,1,78,1,Minnesota Timberwolves,95
 400827931,2,1,2015-11-01,400827931,Oklahoma City Thunder,0,117,3,Denver Nuggets,93
 400827960,2,3,2015-11-05,400827960,Denver Nuggets,3,84,2,Utah Jazz,96
 400827989,4,4,2015-11-09,400827989,Denver Nuggets,4,108,3,Portland Trail Blazers,104
 400827937,2,2,2015-11-02,400827937,Minnesota Timberwolves,1,101,2,Portland Trail Blazers,106
+400828181,12,9,2015-12-05,400828181,Minnesota Timberwolves,11,103,8,Portland Trail Blazers,109
+400828095,6,9,2015-11-23,400828095,Utah Jazz,7,89,6,Oklahoma City Thunder,111
 400827955,2,3,2015-11-04,400827955,Utah Jazz,2,92,2,Portland Trail Blazers,108

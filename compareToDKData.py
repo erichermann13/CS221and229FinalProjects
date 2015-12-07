@@ -7,7 +7,7 @@ import numpy as np
 import math
 
 year = 2016
-testDate = datetime.strptime('31Oct2015', '%d%b%Y')
+testDate = datetime.strptime('05Dec2015', '%d%b%Y')
 
 dataToIgnore = ['Unnamed: 0', 'Unnamed: 0.1', '+/-', '3PA', '3PM', 'AST', 'BLK', 'DREB', 'FGA', 'FGM', 
 'FTA', 'FTM', 'MIN', 'OREB', 'PF', 'PTS', 'REB', 'STL', 'TO', 'game_id',  'date', 'home_team', 
@@ -28,17 +28,20 @@ newFrame = pd.merge(dataFromDate, DKData, left_on = 'player', right_on  = 'Name'
 newFrame = newFrame.drop(dataToIgnore, axis=1)
 
 # newFrame = newFrame[newFrame.AvgPointsPerGame != 0]
-newFrame = newFrame[newFrame.DKPoints != 0]
-newFrame = newFrame[np.isfinite(newFrame['DKPoints'])]
+newFrame = newFrame[newFrame.DKPointsOriginal != 0]
+newFrame = newFrame[np.isfinite(newFrame['DKPointsOriginal'])]
 
-newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPoints']
+newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPointsOriginal']
 
-newFrame['Error'] = newFrame['Difference']/newFrame['DKPoints']
+newFrame['Error'] = newFrame['Difference']/newFrame['DKPointsOriginal']
+newFrame['Error'] = newFrame['Error'].abs()
+
+newFrame = newFrame[newFrame['DKPointsOriginal'] > 5]
 
 print newFrame
 
 averageError = newFrame['Error'].mean()
-print averageError
+print "Average Error %f" % averageError
 
 
 
