@@ -29,10 +29,8 @@ uniquePlayers = pd.unique(playerNames)
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
-minPoints = 20
-maxPoints = 30
-numPreviousGamesToConsider = 5
-numIterations = 20
+numPreviousGamesToConsider = 20
+numIterations = 5
 convergenceConstant = 0.05
 
 discretizedStates = [10, 20, 30]
@@ -105,7 +103,7 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 						thetaToReview[i] = thetaToReview[i] + alpha*(convertedDKPoints - convertedHFunction)*playerAverages[i]
 				else:
 					diff = convertedDKPoints - convertedHFunction
-					if convertedDKPoints > minPoints:
+					if convertedDKPoints > discretizedStates[0]:
 						pctError = abs(diff)/convertedDKPoints
 						toOutput.append([aPlayer, convertedHFunction, convertedDKPoints, diff, pctError])
 
@@ -166,10 +164,10 @@ headers = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 
 'PF', 'PTS', 'REB', 'STL', 'TO', 'home_team_score', 'visit_team_score', 'Home', 'team_win_pct', 'opponent_win_pct', 
 'HomeCurr', 'team_win_pctCurr', 'opponent_win_pctCurr']
 
-for i in xrange(0, len(discretizedStates)):
-	thetaCurr = theta[i]
-	for j in xrange(0, len(headers)):
-		print "%s: %f" % (headers[j], thetaCurr[j])
+# for i in xrange(0, len(discretizedStates)):
+# 	thetaCurr = theta[i]
+# 	for j in xrange(0, len(headers)):
+# 		print "%s: %f" % (headers[j], thetaCurr[j])
 
 newOutfile = open(thetaFileName, 'wb')
 writer = csv.writer(newOutfile)
