@@ -3,15 +3,12 @@ import collections, util, copy, random
 from sets import Set
 MAX_BANK = 50000
 NUM_PLAYERS = 8
-AVG_SALARY = 4300
+AVG_SALARY = 3000
+#AVG_SALARY = 4300
 
-# A backtracking algorithm that solves weighted CSP.
-# Usage:
-#   search = BacktrackingSearch()
-#   search.solve(csp)
 class BeamSearch():
 
-    def __init__(self, players_info, k = 10):
+    def __init__(self, players_info, k = 10, num_to_return = 3):
         # keeps track of all the optimal assignments
         self.k = k
         self.players_info = players_info
@@ -19,6 +16,8 @@ class BeamSearch():
         self.optimalAssignment = {}
         self.optimalWeight = 0
         self.optimalCost = 0
+        self.num_to_return = num_to_return
+
         # Keep track of the number of optimal assignments and assignments. These
         # two values should be identical when the CSP is unweighted or only has binary
         # weights.
@@ -62,8 +61,8 @@ class BeamSearch():
         self.domains = {var: list(self.csp.values[var]) for var in self.csp.variables}
         # perform beam search
         self.beam_search()
-        print "optimal assignment", self.optimalAssignment
-        return self.optimalAssignment
+        #print "optimal assignment", self.optimalAssignment
+        return self.optimalAssignments
 
 
     def beam_search(self):
@@ -90,8 +89,8 @@ class BeamSearch():
                         newAssignment[var] = val
                         results.append((newAssignment, old_weight + weight, old_cost + cost))
 
-    	# prune
-            print "pruning from", len(results), "results"
+    	    # prune
+            #print "pruning from", len(results), "results"
             if len(results) > self.k:
                  results = sorted(results, key=lambda x: x[1]) [ : self.k]
 
@@ -99,5 +98,6 @@ class BeamSearch():
         self.numOptimalAssignments = len(results)
         self.allAssignments = results
         self.optimalAssignment , self.optimalWeight, self.optimalCost = self.allAssignments[0]
-
+        indices = [(i*self.numOptimalAssignments)/self.num_to_return for i in range(self.num_to_return)]
+        self.optimalAssignments = [self.allAssignments[i] for i in indices]
 
