@@ -29,11 +29,11 @@ uniquePlayers = pd.unique(playerNames)
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
-numPreviousGamesToConsider = 20
+numPreviousGamesToConsider = 5
 numIterations = 5
 convergenceConstant = 0.05
 
-discretizedStates = [10, 20, 30]
+discretizedStates = [40]
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
