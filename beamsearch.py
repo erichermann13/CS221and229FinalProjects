@@ -3,8 +3,7 @@ import collections, util, copy, random
 from sets import Set
 MAX_BANK = 50000
 NUM_PLAYERS = 8
-AVG_SALARY = 3000
-#AVG_SALARY = 4300
+AVG_SALARY = 4000
 
 class BeamSearch():
 
@@ -92,12 +91,14 @@ class BeamSearch():
     	    # prune
             #print "pruning from", len(results), "results"
             if len(results) > self.k:
-                 results = sorted(results, key=lambda x: x[1]) [ : self.k]
+                 results = sorted(results, key=lambda x: x[1], reverse = True) [ : self.k]
 
         print "number of optimal results", len(results)
         self.numOptimalAssignments = len(results)
         self.allAssignments = results
         self.optimalAssignment , self.optimalWeight, self.optimalCost = self.allAssignments[0]
+
         indices = [(i*self.numOptimalAssignments)/self.num_to_return for i in range(self.num_to_return)]
+
         self.optimalAssignments = [self.allAssignments[i] for i in indices]
 

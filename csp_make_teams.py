@@ -20,7 +20,8 @@ def make_player_dict():
             if row["AvgPointsPerGame"] < 10:
                 continue
             row["Position"] = get_possible_positions(row["Position"])
-            row["Salary"] = util.round_to_thousands(int(row["Salary"]))
+            row["Salary"] = util.round_up(int(row["Salary"]), 200)
+            #row["Salary"] = int(row["Salary"])
             row["Points"] = float(row["AvgPointsPerGame"])
             result[row["Name"]] = row
         return result
@@ -77,8 +78,9 @@ def main():
     #ipdb.set_trace()
     get_beamsearch_results(csp, players)
 
+
 def get_beamsearch_results(csp, players):
-    search = beamsearch.BeamSearch(players, k = 15000)
+    search = beamsearch.BeamSearch(players, k = 10000)
     start = time.time()
     best_teams = search.solve(csp) # TODO check that these work :  MCV and AC3
     for best_team in best_teams:

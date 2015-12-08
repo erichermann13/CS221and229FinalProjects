@@ -2,14 +2,8 @@ import json, re
 import collections
 import math
 
-def round_to_tens(x):
-    return int(math.ceil(x / 10.0)) * 10
-def round_to_hundreds(x):
-    return int(math.ceil(x / 100.0)) * 100
-
-def round_to_thousands(x):
-    return int(math.ceil(x / 1000.0)) * 1000
-
+def round_up(x, rounding_num):
+    return int(math.ceil(float(x) / rounding_num)) * rounding_num
 
 def get_sum_variable(csp, name, variables, maxSum, players):
     """
