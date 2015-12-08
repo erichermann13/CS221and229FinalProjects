@@ -3,7 +3,8 @@ import csv
 import ipdb
 import util
 import backtracking
-player_filename = "./SalariesData/DKSalaries11.02.2015.csv"
+#player_filename = "./SalariesData/DKSalaries11.02.2015.csv"
+player_filename = "./PredictionsData/12.7.2015.csv"
 positions = ['PG', 'PF', 'SG','SF', 'C', 'Util', 'G', 'F']
 TOTAL_SALARY_LIMIT = 50000
 
