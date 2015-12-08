@@ -90,8 +90,6 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 			if bucket != -1:
 				thetaToReview = theta[bucket]
 
-			# if DKPointsForTest > minPoints and DKPointsForTest < maxPoints:
-
 				playerAverages = trainData.mean()
 
 				for newRow in currGameData:
@@ -109,8 +107,6 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 					diff = convertedDKPoints - convertedHFunction
 					if convertedDKPoints > minPoints:
 						pctError = abs(diff)/convertedDKPoints
-						# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
-						# % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
 						toOutput.append([aPlayer, convertedHFunction, convertedDKPoints, diff, pctError])
 
 
@@ -121,7 +117,6 @@ for j in xrange(0, numIterations):
 	thetaCurr = copy.deepcopy(theta)
 	for aPlayer in trainPlayers:
 		playerData = cleanPlayerData(aPlayer)
-		# print aPlayer
 		runTrainOrTest(playerData, True, None)
 
 	print "Iteration %d" % j

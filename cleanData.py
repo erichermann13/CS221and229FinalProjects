@@ -5,11 +5,13 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 
-year = 2015
+year = 2016
 
 playersFile = './players' + str(year) + '.csv'
 outputFile = './players_clean' + str(year) + '.csv'
 columnDataOutputFile = './avg_std_dev_cols' + str(year) + '.csv'
+
+playerRiskinessFile = './players_riskiness' + str(year) + '.csv'
 
 players = pd.read_csv(playersFile)
 
@@ -51,18 +53,42 @@ players = players.drop(toDrop, axis=1)
 columnAverages = []
 columnStdDevs = []
 
+# Find the mean and stdDev for each player
+playerMeanStdDevData = []
+playerNames = players['player']
+uniquePlayers = pd.unique(playerNames)
+for aPlayer in uniquePlayers:
+	playerData = players.loc[players['player'] == aPlayer]
+	pointsCol = playerData['DKPoints']
+	average = pointsCol.mean()
+	stdDev = pointsCol.std()
+	playerMeanStdDevData.append([aPlayer, average, stdDev, stdDev/average, 0.0])
+
+overallPointsAverage = 0.0
+overallPointsStdDev = 0.0
+
+# Center the columns
 for col in colsToCenter:
 	if col == 'DKPoints':
 		players['DKPointsOriginal'] = players[col]
 	currColumn = players[col]
 	average = currColumn.mean()
 	stdDev = currColumn.std()
+	if col == 'DKPoints':
+		overallPointsAverage = average
+		overallPointsStdDev = stdDev
 	print "Column %s, Average %f, stdDev %f" % (col, average, stdDev)
 	currColumn -= average
 	currColumn /= stdDev
 	players[col] = currColumn
 	columnAverages.append(average)
 	columnStdDevs.append(stdDev)
+
+averageRatio = overallPointsStdDev/overallPointsAverage
+
+for onePlayer in playerMeanStdDevData:
+	playerRatio = onePlayer[3]
+	onePlayer[4] = playerRatio/averageRatio
 
 # print players
 
@@ -71,6 +97,11 @@ writer = csv.writer(outfile)
 writer.writerow(['Statistic:'] + colsToCenter)
 writer.writerow(['Averages:'] + columnAverages)
 writer.writerow(['Std Devs:'] + columnStdDevs)
+
+outfile = open(playerRiskinessFile, 'wb')
+writer = csv.writer(outfile)
+writer.writerow(['player', 'avg_points', 'std_dev_points', 'std_avg_ratio', 'riskiness_ratio'])
+writer.writerows(playerMeanStdDevData)
 
 players.to_csv(outputFile)
 
