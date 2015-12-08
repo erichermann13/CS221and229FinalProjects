@@ -20,11 +20,12 @@ currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
 minGames = 0
 numPreviousGamesToConsider = 5
 minPoints = 5
+discretizedStates = [10, 20, 30]
 
 DKData = pd.read_csv(DKFileName)
 players = pd.read_csv(playersFileName)
 theta = pd.read_csv(thetaFileName)
-theta = theta.ix[0]
+# theta = theta.ix[0]
 dataDeviations = pd.read_csv(dataDeviationsFileName)
 pointsAverage = dataDeviations['DKPoints'][0]
 pointsStdDev = dataDeviations['DKPoints'][1]
@@ -38,9 +39,15 @@ def runTrainOrTest(playerData, DKPlayerData):
 		trainData = playerData.iloc[numElems-numPreviousGamesToConsider:numElems]
 		DKPointsForTest = playerData['DKPointsOriginal'].mean()
 		trainData = trainData.drop('DKPointsOriginal', axis=1)
-		print "Player: %s AvgPoints: %f" % (aPlayer, DKPointsForTest)
+		# print "Player: %s AvgPoints: %f" % (aPlayer, DKPointsForTest)
 
-		if DKPointsForTest > minPoints:
+		bucket = -1
+		while DKPointsForTest > discretizedStates[bucket + 1]:
+			bucket += 1
+			if bucket == len(discretizedStates)-1: break
+
+		if bucket != -1:
+			thetaToReview = theta.ix[bucket]
 
 			playerAverages = trainData.mean()
 
@@ -63,7 +70,7 @@ def runTrainOrTest(playerData, DKPlayerData):
 					value = regressionUtil.getTeamRecord(otherTeam)
 				playerAverages[newRow + 'Curr'] = value
 
-			hFunction = np.dot(playerAverages, theta)
+			hFunction = np.dot(playerAverages, thetaToReview)
 			return hFunction*pointsStdDev + pointsAverage
 
 	return 0
@@ -78,9 +85,6 @@ for aPlayer in playerNames:
 	DKPrediction = DKPlayerData.iloc[0]['AvgPointsPerGame']
 	print "Player: %s Score: %f DraftKings Prediction: %f" % (aPlayer, predictedScore, DKPrediction)
 	predictedScores.append([aPlayer, predictedScore, DKPrediction])
-
-print ""
-print predictedScores
 
 outfile = open(outputFileName, 'wb')
 writer = csv.writer(outfile)

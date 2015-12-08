@@ -31,6 +31,7 @@ def getTeamRecord(teamAbbrev):
 	teamAbbrev = teamAbbrev.lower()
 	if teamAbbrev == 'was': teamAbbrev = 'wsh'
 	if teamAbbrev =='pho': teamAbbrev = 'phx'
+	if teamAbbrev =='uta': teamAbbrev = 'utah'
 
 	teamNameIndex = theTeams.loc[theTeams['prefix_1'] == teamAbbrev].index.tolist()[0]
 	teamName = theTeams.iloc[teamNameIndex]['team']
@@ -44,48 +45,3 @@ def getTeamRecord(teamAbbrev):
 	winPercentage = (winPercentage - recordAverage)/recordStdDev
 	return winPercentage
 
-
-
-
-
-# def runTrainOrTest(playerData, trainBool, predictBool, toOutput):
-# 	numElems = len(playerData)
-# 	# Note that a player's information is not super useful if they played only in a few games
-# 	if numElems > minGames:
-# 		for k in xrange(numPreviousGamesToConsider, numElems):
-# 			trainData = playerData.iloc[k-numPreviousGamesToConsider:k]
-# 			DKPoints = playerData.iloc[k]['DKPoints']
-# 			DKPointsForTest = playerData.iloc[k]['DKPointsOriginal']
-# 			trainData = trainData.drop('DKPointsOriginal', axis=1)
-
-# 			if DKPointsForTest > minPoints:
-
-# 				playerAverages = trainData.mean()
-
-# 				# toConsider = 'DKPoints'
-# 				# for i in xrange(0, numPreviousGamesToConsider):
-# 				# 	playerAverages[toConsider + str(i)] = trainData.iloc[i][toConsider]
-
-# 				# columns = trainData.columns.values.tolist()
-# 				# for col in columns:
-# 				# 	for i in xrange(4, numPreviousGamesToConsider):
-# 				# 		playerAverages[col + str(i)] = trainData.iloc[i][col]
-
-# 				for newRow in currGameData:
-# 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
-
-# 				headers = playerAverages.axes[0]
-
-# 				hFunction = np.dot(playerAverages, theta)
-# 				if predictBool:
-# 					return convertBack(hFunction)
-
-# 				if trainBool:
-# 					for i in xrange(0, len(theta)):
-# 						theta[i] = theta[i] + alpha*(convertBack(DKPoints) - convertBack(hFunction))*playerAverages[i]
-# 				else:
-# 					diff = convertBack(DKPoints) - convertBack(hFunction)
-# 					pctError = abs(diff)/convertBack(DKPoints)
-# 					# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
-# 					# % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
-# 					toOutput.append([aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError])

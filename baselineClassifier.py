@@ -5,6 +5,8 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 import math
+from scipy.spatial import distance
+import copy
 
 year = 2015
 
@@ -28,8 +30,12 @@ numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
 minPoints = 20
+maxPoints = 30
 numPreviousGamesToConsider = 5
-numIterations = 5
+numIterations = 20
+convergenceConstant = 0.05
+
+discretizedStates = [10, 20, 30]
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
@@ -48,7 +54,11 @@ currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
 
 dataToIgnore = newDataToIgnore
 
-theta = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1)) + len(currGameData))
+thetaInterior = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1)) + len(currGameData))
+theta = []
+for i in xrange(0, len(discretizedStates)):
+	theta.append(copy.deepcopy(thetaInterior))
+
 alpha = 0.00005
 headers = []
 
@@ -69,50 +79,63 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 		for k in xrange(numPreviousGamesToConsider, numElems):
 			trainData = playerData.iloc[k-numPreviousGamesToConsider:k]
 			DKPoints = playerData.iloc[k]['DKPoints']
-			DKPointsForTest = playerData.iloc[k]['DKPointsOriginal']
+			DKPointsForTest = trainData['DKPointsOriginal'].mean()
 			trainData = trainData.drop('DKPointsOriginal', axis=1)
 
-			if DKPointsForTest > minPoints:
+			bucket = -1
+			while DKPointsForTest > discretizedStates[bucket + 1]:
+				bucket += 1
+				if bucket == len(discretizedStates)-1: break
+
+			if bucket != -1:
+				thetaToReview = theta[bucket]
+
+			# if DKPointsForTest > minPoints and DKPointsForTest < maxPoints:
 
 				playerAverages = trainData.mean()
-
-				# toConsider = 'DKPoints'
-				# for i in xrange(0, numPreviousGamesToConsider):
-				# 	playerAverages[toConsider + str(i)] = trainData.iloc[i][toConsider]
-
-				# columns = trainData.columns.values.tolist()
-				# for col in columns:
-				# 	for i in xrange(4, numPreviousGamesToConsider):
-				# 		playerAverages[col + str(i)] = trainData.iloc[i][col]
 
 				for newRow in currGameData:
 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
 
 				headers = playerAverages.axes[0]
 
-				hFunction = np.dot(playerAverages, theta)
+				hFunction = np.dot(playerAverages, thetaToReview)
+				convertedDKPoints = convertBack(DKPoints)
+				convertedHFunction = convertBack(hFunction)
 				if trainBool:
-					for i in xrange(0, len(theta)):
-						theta[i] = theta[i] + alpha*(convertBack(DKPoints) - convertBack(hFunction))*playerAverages[i]
+					for i in xrange(0, len(thetaToReview)):
+						thetaToReview[i] = thetaToReview[i] + alpha*(convertedDKPoints - convertedHFunction)*playerAverages[i]
 				else:
-					diff = convertBack(DKPoints) - convertBack(hFunction)
-					pctError = abs(diff)/convertBack(DKPoints)
-					# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
-					# % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
-					toOutput.append([aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError])
+					diff = convertedDKPoints - convertedHFunction
+					if convertedDKPoints > minPoints:
+						pctError = abs(diff)/convertedDKPoints
+						# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
+						# % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
+						toOutput.append([aPlayer, convertedHFunction, convertedDKPoints, diff, pctError])
 
 
 
 
 # Train
 for j in xrange(0, numIterations):
+	thetaCurr = copy.deepcopy(theta)
 	for aPlayer in trainPlayers:
 		playerData = cleanPlayerData(aPlayer)
 		# print aPlayer
 		runTrainOrTest(playerData, True, None)
 
-	print j
+	print "Iteration %d" % j
+	intermediateDistance = []
+	intermediateTotalLength = []
+	for i in xrange(0, len(theta)):
+		intermediateDistance.append(distance.euclidean(thetaCurr[i], theta[i]))
+		intermediateTotalLength.append(distance.euclidean(0, theta[i]))
+	dist = distance.euclidean(0, intermediateDistance)
+	totalLength = distance.euclidean(0, intermediateTotalLength)
+	diff = dist/totalLength
+	print "Euclidean Dist: %f Diff: %f" % (dist, diff)
 	print theta
+	if diff < convergenceConstant: break
 
 # See how well you did
 toStore = []
@@ -144,19 +167,20 @@ writer = csv.writer(outfile)
 writer.writerow(['Player Name', 'Predicted Points', 'Actual Points', "Difference", "Pct Error"])
 writer.writerows(toStore)
 
-newHeaders = []
-for val in headers:
-	newHeaders.append(val)
-headers = newHeaders
-
 headers = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 'MIN', 'OREB', 
 'PF', 'PTS', 'REB', 'STL', 'TO', 'home_team_score', 'visit_team_score', 'Home', 'team_win_pct', 'opponent_win_pct', 
 'HomeCurr', 'team_win_pctCurr', 'opponent_win_pctCurr']
 
+for i in xrange(0, len(discretizedStates)):
+	thetaCurr = theta[i]
+	for j in xrange(0, len(headers)):
+		print "%s: %f" % (headers[j], thetaCurr[j])
+
 newOutfile = open(thetaFileName, 'wb')
 writer = csv.writer(newOutfile)
 writer.writerow(headers)
-writer.writerow(theta)
+for i in xrange(0, len(discretizedStates)):
+	writer.writerow(theta[i])
 
 
 

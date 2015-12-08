@@ -10,7 +10,7 @@ import os
 year = 2016
 pathToSalariesData = "/Users/Eric/CS221and229FinalProjects/SalariesData"
 
-minPoints = 0
+minPoints = 10
 
 
 
@@ -27,31 +27,32 @@ errors = []
 
 for DKFile in os.listdir(pathToSalariesData):
 
-	
-	dateList = DKFile.split('s')[1]
-	testDate = datetime.strptime(dateList, '%m.%d.%Y.c')
+	if DKFile[0] != '.':	
+		dateList = DKFile.split('s')[1]
+		testDate = datetime.strptime(dateList, '%m.%d.%Y.c')
 
-	DKData = pd.read_csv("./SalariesData/" + DKFile)
+		DKData = pd.read_csv("./SalariesData/" + DKFile)
 
-	dataFromDate = playersData.loc[playersData['date'] == testDate]
+		dataFromDate = playersData.loc[playersData['date'] == testDate]
 
-	newFrame = pd.merge(dataFromDate, DKData, left_on = 'player', right_on  = 'Name')
+		newFrame = pd.merge(dataFromDate, DKData, left_on = 'player', right_on  = 'Name')
 
-	newFrame = newFrame.drop(dataToIgnore, axis=1)
+		newFrame = newFrame.drop(dataToIgnore, axis=1)
 
-	newFrame = newFrame[newFrame.DKPointsOriginal != 0]
-	newFrame = newFrame[np.isfinite(newFrame['DKPointsOriginal'])]
+		newFrame = newFrame[newFrame.DKPointsOriginal != 0]
+		newFrame = newFrame[np.isfinite(newFrame['DKPointsOriginal'])]
 
-	newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPointsOriginal']
+		newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPointsOriginal']
 
-	newFrame['Error'] = newFrame['Difference']/newFrame['DKPointsOriginal']
-	newFrame['Error'] = newFrame['Error'].abs()
+		newFrame['Error'] = newFrame['Difference']/newFrame['DKPointsOriginal']
+		newFrame['Error'] = newFrame['Error'].abs()
 
-	newFrame = newFrame[newFrame['DKPointsOriginal'] > minPoints]
+		newFrame = newFrame[newFrame['DKPointsOriginal'] > minPoints]
 
-	averageError = newFrame['Error'].mean()
-	print "Average Error on %s:  %f" % (str(testDate), averageError)
-	errors.append(averageError)
+		averageError = newFrame['Error'].mean()
+		if not math.isnan(averageError):
+			print "Average Error on %s:  %f" % (str(testDate), averageError)
+			errors.append(averageError)
 
 print "Overall Average Error %f" % np.mean(errors)
 
