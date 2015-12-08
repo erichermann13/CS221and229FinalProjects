@@ -8,7 +8,7 @@ import math
 import regressionUtil
 
 year = 2016
-dateToPredict = "12.7.2015"
+dateToPredict = "12.8.2015"
 DKFileName = "./SalariesData/DKSalaries" + dateToPredict + ".csv"
 playersFileName = "./players_clean" + str(year) + ".csv"
 thetaFileName = "./modelParameters.csv"
