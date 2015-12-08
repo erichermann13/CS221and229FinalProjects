@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import csv
-import ipdb
+import pdb
 import util
 import backtracking
-player_filename = "./SalariesData/DKSalaries11.02.2015.csv"
+import beamsearch
+import time
+player_filename = "./PredictionsData/12.7.2015.csv"
 positions = ['PG', 'PF', 'SG','SF', 'C', 'Util', 'G', 'F']
 TOTAL_SALARY_LIMIT = 50000
 
@@ -11,9 +13,10 @@ def make_player_dict():
     with open(player_filename) as f:
         headers = f.readline().split(',')
         headers = [''.join(e for e in header if e.isalnum()) for header in headers]
+        print headers
         reader = csv.DictReader(f, fieldnames=headers)
         result = {}
-        i = 40
+        i = 50
         for row in reader:
             if i == 0: break
             i -= 1
@@ -75,13 +78,15 @@ def main():
     add_salary_constraints(csp, players)
     #Add assignment weights
     add_weights(csp, players)
-
-    search = backtracking.BacktrackingSearch()
-    best_team = search.solve(csp, True, True) # TODO check that these work :  MCV and AC3
+    # start time
+    search = beamsearch.BeamSearch(players)
+    start = time.time()
+    best_team = search.solve(csp) # TODO check that these work :  MCV and AC3
+    print "Took", time.time() - start, "seconds to solve"
     total_cost = 0
     #ipdb.set_trace()
     print "Best Team was:"
-    for variable in best_team:
+    for variable in best_team.keys():
         if not isinstance(variable, str): continue
         print players[best_team[variable]]
         total_cost += players[best_team[variable]]["Salary"]
