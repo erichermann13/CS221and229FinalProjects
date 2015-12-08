@@ -5,7 +5,7 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 
-year = 2016
+year = 2015
 
 playersFile = './players' + str(year) + '.csv'
 outputFile = './players_clean' + str(year) + '.csv'
@@ -90,7 +90,7 @@ for onePlayer in playerMeanStdDevData:
 	playerRatio = onePlayer[3]
 	onePlayer[4] = playerRatio/averageRatio
 
-# print players
+players['const'] = 1
 
 outfile = open(columnDataOutputFile, 'wb')
 writer = csv.writer(outfile)

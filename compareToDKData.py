@@ -10,7 +10,7 @@ import os
 year = 2016
 pathToSalariesData = "/Users/Eric/CS221and229FinalProjects/SalariesData"
 
-minPoints = 40
+minPoints = 20
 
 
 
@@ -24,6 +24,7 @@ playersData =  pd.read_csv(playersFile)
 playersData['date'] = pd.to_datetime(playersData.date)
 
 errors = []
+diffs = []
 
 for DKFile in os.listdir(pathToSalariesData):
 
@@ -43,6 +44,7 @@ for DKFile in os.listdir(pathToSalariesData):
 		newFrame = newFrame[np.isfinite(newFrame['DKPointsOriginal'])]
 
 		newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPointsOriginal']
+		newFrame['Difference'] = newFrame['Difference'].abs()
 
 		newFrame['Error'] = newFrame['Difference']/newFrame['DKPointsOriginal']
 		newFrame['Error'] = newFrame['Error'].abs()
@@ -50,11 +52,14 @@ for DKFile in os.listdir(pathToSalariesData):
 		newFrame = newFrame[newFrame['DKPointsOriginal'] > minPoints]
 
 		averageError = newFrame['Error'].mean()
+		averageDiff = newFrame['Difference'].mean()
 		if not math.isnan(averageError):
-			print "Average Error on %s:  %f" % (str(testDate), averageError)
+			print "%s: Average Error %f Average Diff: %f" % (str(testDate), averageError, averageDiff)
+			# print "Avg Error/Avg Diff: %f" % (averageError/averageDiff)
 			errors.append(averageError)
+			diffs.append(averageDiff)
 
-print "Overall Average Error %f" % np.mean(errors)
+print "Overall: Average Error %f Average Diff %f" % (np.mean(errors), np.mean(diffs))
 
 
 
