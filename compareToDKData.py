@@ -10,7 +10,7 @@ import os
 year = 2016
 pathToSalariesData = "/Users/Eric/CS221and229FinalProjects/SalariesData"
 
-minPoints = 10
+minPoints = 40
 
 
 

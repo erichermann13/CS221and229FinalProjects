@@ -19,7 +19,6 @@ currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
 
 minGames = 0
 numPreviousGamesToConsider = 5
-minPoints = 5
 discretizedStates = [10, 20, 30]
 
 DKData = pd.read_csv(DKFileName)
@@ -39,7 +38,6 @@ def runTrainOrTest(playerData, DKPlayerData):
 		trainData = playerData.iloc[numElems-numPreviousGamesToConsider:numElems]
 		DKPointsForTest = playerData['DKPointsOriginal'].mean()
 		trainData = trainData.drop('DKPointsOriginal', axis=1)
-		# print "Player: %s AvgPoints: %f" % (aPlayer, DKPointsForTest)
 
 		bucket = -1
 		while DKPointsForTest > discretizedStates[bucket + 1]:
@@ -83,12 +81,14 @@ for aPlayer in playerNames:
 	DKPlayerData = DKData.loc[DKData['Name'] == aPlayer]
 	predictedScore = runTrainOrTest(playerData, DKPlayerData)
 	DKPrediction = DKPlayerData.iloc[0]['AvgPointsPerGame']
+	playerPosition = DKPlayerData.iloc[0]['Position']
+	playerSalary = DKPlayerData.iloc[0]['Salary']
 	print "Player: %s Score: %f DraftKings Prediction: %f" % (aPlayer, predictedScore, DKPrediction)
-	predictedScores.append([aPlayer, predictedScore, DKPrediction])
+	predictedScores.append([aPlayer, predictedScore, DKPrediction, playerPosition, playerSalary])
 
 outfile = open(outputFileName, 'wb')
 writer = csv.writer(outfile)
-writer.writerow(['Player', 'Our Prediction', 'DraftKings Prediction'])
+writer.writerow(['Player', 'Our Prediction', 'DraftKings Prediction', 'Position', 'Salary'])
 writer.writerows(predictedScores)
 
 

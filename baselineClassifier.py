@@ -29,13 +29,11 @@ uniquePlayers = pd.unique(playerNames)
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
-minPoints = 20
-maxPoints = 30
 numPreviousGamesToConsider = 5
-numIterations = 20
+numIterations = 5
 convergenceConstant = 0.05
 
-discretizedStates = [10, 20, 30]
+discretizedStates = [40]
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
@@ -90,8 +88,6 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 			if bucket != -1:
 				thetaToReview = theta[bucket]
 
-			# if DKPointsForTest > minPoints and DKPointsForTest < maxPoints:
-
 				playerAverages = trainData.mean()
 
 				for newRow in currGameData:
@@ -107,10 +103,8 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 						thetaToReview[i] = thetaToReview[i] + alpha*(convertedDKPoints - convertedHFunction)*playerAverages[i]
 				else:
 					diff = convertedDKPoints - convertedHFunction
-					if convertedDKPoints > minPoints:
+					if convertedDKPoints > discretizedStates[0]:
 						pctError = abs(diff)/convertedDKPoints
-						# print "%s Predicted Points: %f  Actual Points %f Diff %f Error %f" 
-						# % (aPlayer, convertBack(hFunction), convertBack(DKPoints), diff, pctError)
 						toOutput.append([aPlayer, convertedHFunction, convertedDKPoints, diff, pctError])
 
 
@@ -121,7 +115,6 @@ for j in xrange(0, numIterations):
 	thetaCurr = copy.deepcopy(theta)
 	for aPlayer in trainPlayers:
 		playerData = cleanPlayerData(aPlayer)
-		# print aPlayer
 		runTrainOrTest(playerData, True, None)
 
 	print "Iteration %d" % j
@@ -171,10 +164,10 @@ headers = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 
 'PF', 'PTS', 'REB', 'STL', 'TO', 'home_team_score', 'visit_team_score', 'Home', 'team_win_pct', 'opponent_win_pct', 
 'HomeCurr', 'team_win_pctCurr', 'opponent_win_pctCurr']
 
-for i in xrange(0, len(discretizedStates)):
-	thetaCurr = theta[i]
-	for j in xrange(0, len(headers)):
-		print "%s: %f" % (headers[j], thetaCurr[j])
+# for i in xrange(0, len(discretizedStates)):
+# 	thetaCurr = theta[i]
+# 	for j in xrange(0, len(headers)):
+# 		print "%s: %f" % (headers[j], thetaCurr[j])
 
 newOutfile = open(thetaFileName, 'wb')
 writer = csv.writer(newOutfile)
