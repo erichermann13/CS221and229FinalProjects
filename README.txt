@@ -7,6 +7,8 @@ regressionSolver.py - This file does the learning to find theta values for our l
 
 csp_make_teams.py - This file takes data from the PredictionsData folder (where the predictions from the linear regression problem are stored every day) and outputs the optimal team based on the constraints and the data
 
+naiveBayes.py - This file runs a modified version of multinomial naive Bayes to predict player scores, also computing error and also storing values in modelParameters.csv
+
 makePredictions.py - Takes the DraftKings data on who’s playing that day and computes the predicted number of DraftKings points each player will score based on the regression parameter values
 
 getTeams.py, getGames.py, getPlayers.py - Scrape the NBA team, player, and game data from ESPN.com. Data is added to teams.csv, games(year).csv, and players(year).csv

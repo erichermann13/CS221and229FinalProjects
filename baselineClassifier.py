@@ -89,8 +89,8 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 				for newRow in currGameData:
 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
 
-				headers = playerAverages.axes[0]
-				print headers
+				# headers = playerAverages.axes[0]
+				# print headers
 
 				hFunction = np.dot(playerAverages, thetaToReview)
 				convertedDKPoints = convertBack(DKPoints)
@@ -145,10 +145,12 @@ def getAverageError(storedElems):
 	averageDiff = 0.0
 	numElems = len(storedElems)
 	for elem in storedElems:
-		averageError += elem[4]
-		averageDiff += elem[3]
+		averageError += elem[4]*elem[4]
+		averageDiff += elem[3]*elem[3]
 	averageError /= numElems
 	averageDiff /= numElems
+	averageError = math.sqrt(averageError)
+	averageDiff = math.sqrt(averageDiff)
 	return (averageError, averageDiff)
 
 trainError = getAverageError(trainToStore)

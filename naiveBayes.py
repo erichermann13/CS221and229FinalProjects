@@ -33,7 +33,7 @@ trainFraction = 3.0/4
 minGames = 20
 numPreviousGamesToConsider = 5
 
-discretizedStates = [1]
+discretizedStates = [40]
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
@@ -45,7 +45,7 @@ toRemove = ['home_team_score', 'visit_team_score', 'Home', 'home_win_pct', 'away
 dataToConsider = [x for x in dataToConsider if x not in toRemove]
 moarToRemove = ['+/-', '3PA', '3PM', 'FGM', 'FTA', 'FTM', 'OREB']
 dataToConsider = [x for x in dataToConsider if x not in moarToRemove]
-dataToConsider = ['DKPoints', 'AST', 'DKPoints', 'BLK', 'MIN']
+dataToConsider = ['DKPoints', 'MIN', 'AST', 'FGA', "BLK"]
 
 allData = data.axes[1].get_values()
 # print allData
@@ -144,12 +144,12 @@ def getAverageError(storedElems):
 	percentNonZeros = 0.0
 	numElems = len(storedElems)
 	for elem in storedElems:
-		averageError += elem[4]
-		averageDiff += elem[3]
+		averageError += elem[4]**2
+		averageDiff += elem[3]**2
 
 		if elem[1] != 0:
-			errorWithoutZeros += elem[4]
-			diffWithoutZeros += elem[3]
+			errorWithoutZeros += elem[4]**2
+			diffWithoutZeros += elem[3]**2
 			numNonZeros += 1
 			for i in xrange(0, len(discretizedStates)):
 				if elem[2] > discretizedStates[i]:
@@ -159,12 +159,12 @@ def getAverageError(storedElems):
 					toAppend[1] = toAppend[1] + elem[3]
 					errorsAndDiffsAbove[i] = toAppend
 
-	averageError /= numElems
-	averageDiff /= numElems
+	averageError = math.sqrt(averageError/numElems)
+	averageDiff = math.sqrt(averageDiff/numElems)
 
 	if numNonZeros != 0:
-		errorWithoutZeros /= numNonZeros
-		diffWithoutZeros /= numNonZeros
+		errorWithoutZeros = math.sqrt(errorWithoutZeros/numNonZeros)
+		diffWithoutZeros = math.sqrt(diffWithoutZeros/numNonZeros)
 		percentNonZeros = float(numNonZeros)/numElems
 
 		for j in xrange(0, len(discretizedStates)):
