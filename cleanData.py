@@ -22,7 +22,9 @@ players = players.sort('date')
 # Home column will be 1 if the player was on the home team, 0 otherwise
 players['Home'] = np.where(players['team'] == players['home_team'], 1, 0)
 
-del players['id']
+colsToDrop = ['game_id', 'id', 'Unnamed: 0']
+
+players = players.drop(colsToDrop, axis=1)
 
 # Change: I'm centering the data with 0 mean and dividing by standard deviation
 
@@ -102,6 +104,21 @@ outfile = open(playerRiskinessFile, 'wb')
 writer = csv.writer(outfile)
 writer.writerow(['player', 'avg_points', 'std_dev_points', 'std_avg_ratio', 'riskiness_ratio'])
 writer.writerows(playerMeanStdDevData)
+
+quantileData = []
+numQuantiles = 5
+quantileData.append(['Stat'] + [j for j in xrange(0, numQuantiles + 1)])
+for col in colsToCenter:
+	toLookAt = players[col]
+	quantilePlaces = []
+	for i in xrange(0, numQuantiles + 1):
+		quantilePlaces.append(toLookAt.quantile((1/float(numQuantiles))*i))
+	# print quantilePlaces
+	quantileData.append([col] + quantilePlaces)
+
+outfile = open("./quantileData.csv", "wb")
+writer = csv.writer(outfile)
+writer.writerows(quantileData)
 
 players.to_csv(outputFile)
 

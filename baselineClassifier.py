@@ -38,9 +38,7 @@ discretizedStates = [10, 20, 30]
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
 
-dataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', '+/-', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_score', 'home_team_wins', 'visit_team_score']
-newDataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', 'Unnamed: 0', 
+dataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0', 
 'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_wins', 'home_win_pct', 'away_win_pct']
 
 playerBoxScoreData = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 
@@ -49,8 +47,6 @@ teamBoxScoreData = ['home_team_score', 'visit_team_score', 'Home',
 'team_win_pct', 'opponent_win_pct']
 # Note that some data is really relevant for the current game being played
 currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
-
-dataToIgnore = newDataToIgnore
 
 thetaInterior = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1)) + len(currGameData))
 theta = []
@@ -94,6 +90,7 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
 
 				headers = playerAverages.axes[0]
+				print headers
 
 				hFunction = np.dot(playerAverages, thetaToReview)
 				convertedDKPoints = convertBack(DKPoints)
