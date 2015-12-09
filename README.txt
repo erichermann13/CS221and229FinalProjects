@@ -1,5 +1,7 @@
 README
 
+To make a prediction of scores for players on a particular day, first download the DraftKings NBA player salary data for that day into “./SalariesData/(MO.DAY.YEAR)”.  Then, change the date in the predictionParameters.py file to the date you want to predict for and run runPredictor.py. This will output score predictions into “./PredictionsData/(current date)”.
+
 Explanation of Files:
 (in some order of importance)
 
@@ -10,6 +12,10 @@ csp_make_teams.py - This file takes data from the PredictionsData folder (where 
 naiveBayes.py - This file runs a modified version of multinomial naive Bayes to predict player scores, also computing error and also storing values in modelParameters.csv
 
 makePredictions.py - Takes the DraftKings data on who’s playing that day and computes the predicted number of DraftKings points each player will score based on the regression parameter values
+
+runPredictor.py - This file provides a simple way to run the scripts necessary to predict player scores on a particular day
+
+predictionParameters.py - This file contains constants used by several scripts so they don’t need to be changed in each one individually each time
 
 getTeams.py, getGames.py, getPlayers.py - Scrape the NBA team, player, and game data from ESPN.com. Data is added to teams.csv, games(year).csv, and players(year).csv
 

@@ -4,8 +4,9 @@ import csv
 from datetime import datetime, date
 import pandas as pd
 import numpy as np
+import predictionParameters
 
-year = 2015
+year = predictionParameters.predictionYear
 
 playersFile = './players' + str(year) + '.csv'
 outputFile = './players_clean' + str(year) + '.csv'
@@ -25,6 +26,22 @@ players['Home'] = np.where(players['team'] == players['home_team'], 1, 0)
 colsToDrop = ['game_id', 'id', 'Unnamed: 0']
 
 players = players.drop(colsToDrop, axis=1)
+
+# positionCol = players['position'].copy()
+# positionCol = positionCol.str.replace('SG', 1)
+# print positionCol
+# for i in xrange(0, positionCol.size):
+# 	position = positionCol.iloc[i]
+# 	toSave = 0
+# 	if position == 'PG': toSave = 0
+# 	elif str(position) == 1: print "Jesus it's working"
+# 	elif position == 'SF': toSave = 2
+# 	elif position == 'PF': toSave = 3
+# 	elif position == 'C': toSave = 4
+# 	positionCol.iloc[i] = toSave
+# print positionCol
+
+# players['position'] = positionCol
 
 # Change: I'm centering the data with 0 mean and dividing by standard deviation
 
@@ -106,14 +123,14 @@ writer.writerow(['player', 'avg_points', 'std_dev_points', 'std_avg_ratio', 'ris
 writer.writerows(playerMeanStdDevData)
 
 quantileData = []
-numQuantiles = 5
+numQuantiles = predictionParameters.numQuantiles
 quantileData.append(['Stat'] + [j for j in xrange(0, numQuantiles + 1)])
 for col in colsToCenter:
 	toLookAt = players[col]
 	quantilePlaces = []
 	for i in xrange(0, numQuantiles + 1):
 		quantilePlaces.append(toLookAt.quantile((1/float(numQuantiles))*i))
-	# print quantilePlaces
+
 	quantileData.append([col] + quantilePlaces)
 
 outfile = open("./quantileData.csv", "wb")

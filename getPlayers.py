@@ -5,9 +5,10 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 import html5lib
+import predictionParameters
 
 # Note: this code was strongly borrowed from http://www.danielforsyth.me/exploring_nba_data_in_python/
-year = 2016
+year = predictionParameters.predictionYear
 
 gamesFile = './games' + str(year) + '.csv'
 BASE_URL = 'http://espn.go.com/nba/boxscore?gameId={0}'
@@ -41,12 +42,12 @@ headers.insert(2, 'FGA')
 headers.append('DKPoints')
 print headers
 
-columns = ['id', 'team', 'player'] + headers
+columns = ['id', 'team', 'player'] + headers + ['position']
 
 players = pd.DataFrame(columns=columns)
 
 def get_players(players, team_name):
-	array = np.zeros((len(players), len(headers)+1), dtype=object)
+	array = np.zeros((len(players), len(headers)+2), dtype=object)
 	array[:] = np.nan
 	for i, player in enumerate(players):
 		cols = player.find_all('td')
@@ -54,6 +55,7 @@ def get_players(players, team_name):
 		# print cols[0].text
 		# break
 		array[i, 0] = cols[0].text.split(',')[0]
+		playerPosition = cols[0].text.split(',')[1]
 		# print array[i, 0]
 		k = 1
 		for j in range(1, len(headers) - 3):
@@ -94,6 +96,7 @@ def get_players(players, team_name):
 		# print array[i]
 	# print array
 	# print "9999999999999999999999999999999999999999999999999999"
+		array[i][19] = playerPosition
 	frame = pd.DataFrame(columns=columns)
 	for x in array:
 		# print x

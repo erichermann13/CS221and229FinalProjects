@@ -7,8 +7,9 @@ import numpy as np
 import math
 from scipy.spatial import distance
 import copy
+import predictionParameters
 
-year = 2015
+year = predictionParameters.trainYear
 
 playersFile = './players_clean' + str(year) + '.csv'
 outputFileName = './predictorData' + str(year) + '.csv'
@@ -29,17 +30,16 @@ uniquePlayers = pd.unique(playerNames)
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
-numPreviousGamesToConsider = 5
+numPreviousGamesToConsider = predictionParameters.numPreviousGamesToConsider
 numIterations = 20
 convergenceConstant = 0.05
 
-discretizedStates = [10, 20, 30]
+discretizedStates = predictionParameters.discretizedStates
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
 
-dataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_wins', 'home_win_pct', 'away_win_pct']
+dataToIgnore = predictionParameters.dataToIgnore
 
 playerBoxScoreData = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 
 'MIN', 'OREB', 'PF', 'PTS', 'REB', 'STL', 'TO']

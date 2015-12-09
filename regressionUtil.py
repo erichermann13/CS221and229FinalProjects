@@ -5,13 +5,13 @@ from datetime import datetime, date
 import pandas as pd
 import numpy as np
 import math
+import predictionParameters
 
 theYear = 2016
 thePlayersFileName = "./players_clean" + str(theYear) + ".csv"
 teamsFileName = "./teams.csv"
 theDataDeviationsFileName = "./avg_std_dev_cols2015.csv"
-dataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_wins', 'home_win_pct', 'away_win_pct']
+dataToIgnore = predictionParameters.dataToIgnore
 
 
 thePlayers = pd.read_csv(thePlayersFileName)

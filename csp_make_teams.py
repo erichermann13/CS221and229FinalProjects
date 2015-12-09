@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import csv
-import pdb
+import ipdb
 import util
-import backtracking
+#import backtracking
 import beamsearch
 import time
-player_filename = "./PredictionsData/12.7.2015.csv"
+player_filename = "./PredictionsData/12.8.2015.csv"
+#player_filename = "./SalariesData/DKSalaries11.02.2015.csv"
 positions = ['PG', 'PF', 'SG','SF', 'C', 'Util', 'G', 'F']
 TOTAL_SALARY_LIMIT = 50000
 
@@ -13,19 +14,15 @@ def make_player_dict():
     with open(player_filename) as f:
         headers = f.readline().split(',')
         headers = [''.join(e for e in header if e.isalnum()) for header in headers]
-        print headers
         reader = csv.DictReader(f, fieldnames=headers)
         result = {}
-        i = 50
         for row in reader:
-            if i == 0: break
-            i -= 1
             if row["AvgPointsPerGame"] < 10:
                 continue
             row["Position"] = get_possible_positions(row["Position"])
-            row["Salary"] = int(row["Salary"])
+            row["Salary"] = util.round_up(int(row["Salary"]), 200)
+            #row["Salary"] = int(row["Salary"])
             row["Points"] = float(row["AvgPointsPerGame"])
-            print "salary for {} was:{}".format(row["Name"], row["Salary"])
             result[row["Name"]] = row
         return result
 
@@ -78,49 +75,23 @@ def main():
     add_salary_constraints(csp, players)
     #Add assignment weights
     add_weights(csp, players)
-    # start time
-    search = beamsearch.BeamSearch(players)
-    start = time.time()
-    best_team = search.solve(csp) # TODO check that these work :  MCV and AC3
-    print "Took", time.time() - start, "seconds to solve"
-    total_cost = 0
     #ipdb.set_trace()
-    print "Best Team was:"
-    for variable in best_team.keys():
-        if not isinstance(variable, str): continue
-        print players[best_team[variable]]
-        total_cost += players[best_team[variable]]["Salary"]
+    get_beamsearch_results(csp, players)
 
-    print "Total cost was: {}".format(total_cost)
-"""
-def add_team_size_factors(csp, players):
-    # Constrain team size to range(5, 9)
-     sum_var = util.get_sum_variable(csp, "team_size", players.keys(), len(players.keys()))
-   csp.add_unary_factor(sum_var, lambda x: x <= 8 and x >= 8)
 
-def add_player_variables(csp, players):
-    for player_name in players.keys():
-        print "adding variable for player {}".format(player_name)
-        domain = [(x, pos) for pos in players[player_name]["Position"] for x in (0,1)]
-        csp.add_variable(player_name, domain)
+def get_beamsearch_results(csp, players):
+    search = beamsearch.BeamSearch(players, k = 10000)
+    start = time.time()
+    best_teams = search.solve(csp) # TODO check that these work :  MCV and AC3
+    for best_team in best_teams:
+        total_cost = 0
+        best_team = best_team[0]
+        print "\n one optimal team was:"
+        for variable in best_team.keys():
+            if not isinstance(variable, str): continue
+            print players[best_team[variable]]
+            total_cost += players[best_team[variable]]["Salary"]
+            print "Total cost was: {}".format(total_cost)
 
-def add_weights(csp, players):
-    for player in players.keys():
-        player_weight = float(players[player]["AvgPointsPerGame"]) #TODO maybe log this?
-        def weight_factor(val):
-            return player_weight #TODO multiply by val[0]
-        #csp.add_unary_factor(player, weight_factor) #TODO should this be times the val?
-
-def add_position_factors(csp, players):
-    def chosen_and_not_same_pos(val1, val2):
-        if val1[0] and val2[0]: # then both chosen
-            return val1[1] != val2[1] # check that positions not equal
-        return True
-
-    for i, player1 in enumerate(players.keys()):
-        for j, player2 in enumerate(players.keys()):
-            if j > i:
-                csp.add_binary_factor(player1, player2, chosen_and_not_same_pos)
-"""
 if __name__ == "__main__":
     main()

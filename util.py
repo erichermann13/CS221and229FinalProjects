@@ -1,5 +1,9 @@
 import json, re
 import collections
+import math
+
+def round_up(x, rounding_num):
+    return int(math.ceil(float(x) / rounding_num)) * rounding_num
 
 def get_sum_variable(csp, name, variables, maxSum, players):
     """

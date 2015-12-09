@@ -7,8 +7,9 @@ import numpy as np
 import math
 from scipy.spatial import distance
 import copy
+import predictionParameters
 
-year = 2015
+year = predictionParameters.trainYear
 
 playersFile = './players_clean' + str(year) + '.csv'
 outputFileName = './predictorData' + str(year) + '.csv'
@@ -29,19 +30,16 @@ uniquePlayers = pd.unique(playerNames)
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
-numPreviousGamesToConsider = 5
+numPreviousGamesToConsider = predictionParameters.numPreviousGamesToConsider
 numIterations = 20
-convergenceConstant = 0.025
+convergenceConstant = 0.05
 
-discretizedStates = [10, 20, 30]
+discretizedStates = predictionParameters.discretizedStates
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
 
-dataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', '+/-', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_score', 'home_team_wins', 'visit_team_score']
-newDataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_wins', 'home_win_pct', 'away_win_pct']
+dataToIgnore = predictionParameters.dataToIgnore
 
 playerBoxScoreData = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 
 'MIN', 'OREB', 'PF', 'PTS', 'REB', 'STL', 'TO']
@@ -49,8 +47,6 @@ teamBoxScoreData = ['home_team_score', 'visit_team_score', 'Home',
 'team_win_pct', 'opponent_win_pct']
 # Note that some data is really relevant for the current game being played
 currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
-
-dataToIgnore = newDataToIgnore
 
 thetaInterior = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1)) + len(currGameData))
 theta = []
@@ -93,7 +89,8 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 				for newRow in currGameData:
 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
 
-				headers = playerAverages.axes[0]
+				# headers = playerAverages.axes[0]
+				# print headers
 
 				hFunction = np.dot(playerAverages, thetaToReview)
 				convertedDKPoints = convertBack(DKPoints)
@@ -102,7 +99,7 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 					for i in xrange(0, len(thetaToReview)):
 						thetaToReview[i] = thetaToReview[i] + alpha*(convertedDKPoints - convertedHFunction)*playerAverages[i]
 				else:
-					diff = convertedDKPoints - convertedHFunction
+					diff = abs(convertedDKPoints - convertedHFunction)
 					if convertedDKPoints > discretizedStates[0]:
 						pctError = abs(diff)/convertedDKPoints
 						toOutput.append([aPlayer, convertedHFunction, convertedDKPoints, diff, pctError])
@@ -145,15 +142,22 @@ for aPlayer in trainPlayers:
 
 def getAverageError(storedElems):
 	averageError = 0.0
+	averageDiff = 0.0
 	numElems = len(storedElems)
 	for elem in storedElems:
-		averageError += elem[4]
+		averageError += elem[4]*elem[4]
+		averageDiff += elem[3]*elem[3]
 	averageError /= numElems
-	return averageError
+	averageDiff /= numElems
+	averageError = math.sqrt(averageError)
+	averageDiff = math.sqrt(averageDiff)
+	return (averageError, averageDiff)
 
+trainError = getAverageError(trainToStore)
+testError = getAverageError(toStore)
 
-print "Average Train Error: %f" % getAverageError(trainToStore)
-print "Average Test Error: %f" % getAverageError(toStore)
+print "Average Train Error: %f AverageDiff: %f" % (trainError[0], trainError[1])
+print "Average Test Error: %f Average Diff: %f" % (testError[0], testError[1])
 
 outfile = open(outputFileName, 'wb')
 writer = csv.writer(outfile)
@@ -161,7 +165,7 @@ writer.writerow(['Player Name', 'Predicted Points', 'Actual Points', "Difference
 writer.writerows(toStore)
 
 headers = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 'MIN', 'OREB', 
-'PF', 'PTS', 'REB', 'STL', 'TO', 'home_team_score', 'visit_team_score', 'Home', 'team_win_pct', 'opponent_win_pct', 
+'PF', 'PTS', 'REB', 'STL', 'TO', 'home_team_score', 'visit_team_score', 'Home', 'team_win_pct', 'opponent_win_pct', 'const', 
 'HomeCurr', 'team_win_pctCurr', 'opponent_win_pctCurr']
 
 # for i in xrange(0, len(discretizedStates)):
