@@ -9,8 +9,10 @@ player_filename = "./PredictionsData/12.8.2015.csv"
 #player_filename = "./SalariesData/DKSalaries11.02.2015.csv"
 positions = ['PG', 'PF', 'SG','SF', 'C', 'Util', 'G', 'F']
 TOTAL_SALARY_LIMIT = 50000
+BEAM_SIZE = 10000
 
-def make_player_dict():
+
+def make_player_dict(player_filename):
     with open(player_filename) as f:
         headers = f.readline().split(',')
         headers = [''.join(e for e in header if e.isalnum()) for header in headers]
@@ -20,7 +22,7 @@ def make_player_dict():
             if row["AvgPointsPerGame"] < 10:
                 continue
             row["Position"] = get_possible_positions(row["Position"])
-            row["Salary"] = util.round_up(int(row["Salary"]), 200)
+            row["Salary"] = util.round_up(int(row["Salary"]), 500)
             #row["Salary"] = int(row["Salary"])
             row["Points"] = float(row["AvgPointsPerGame"])
             result[row["Name"]] = row
@@ -63,10 +65,10 @@ def add_weights(csp, players):
     for position in positions:
         csp.add_unary_factor(position, lambda player_name: players[player_name]["Points"])
 
-def main():
+def make_teams(player_filename = "./PredictionsData/12.8.2015.csv"):
     csp = util.CSP()
     #Read in players
-    players = make_player_dict()
+    players = make_player_dict(player_filename)
     #Make a variable for each position
     add_position_variables(csp, players)
     #Ensure no position chooses the same player as another
@@ -76,22 +78,29 @@ def main():
     #Add assignment weights
     add_weights(csp, players)
     #ipdb.set_trace()
-    get_beamsearch_results(csp, players)
+    return get_beamsearch_results(csp, players)
 
 
 def get_beamsearch_results(csp, players):
-    search = beamsearch.BeamSearch(players, k = 10000)
+    search = beamsearch.BeamSearch(players, k = BEAM_SIZE)
     start = time.time()
     best_teams = search.solve(csp) # TODO check that these work :  MCV and AC3
+    """
     for best_team in best_teams:
         total_cost = 0
         best_team = best_team[0]
+
         print "\n one optimal team was:"
         for variable in best_team.keys():
             if not isinstance(variable, str): continue
             print players[best_team[variable]]
             total_cost += players[best_team[variable]]["Salary"]
             print "Total cost was: {}".format(total_cost)
+    """
+    if best_teams:
+        return best_teams[0]
+    else:
+        return []
 
 if __name__ == "__main__":
-    main()
+    make_teams()
