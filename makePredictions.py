@@ -6,9 +6,10 @@ import pandas as pd
 import numpy as np
 import math
 import regressionUtil
+import predictionParameters
 
-year = 2016
-dateToPredict = "12.8.2015"
+year = predictionParameters.trainYear
+dateToPredict = predictionParameters.dateForPrediction
 DKFileName = "./SalariesData/DKSalaries" + dateToPredict + ".csv"
 playersFileName = "./players_clean" + str(year) + ".csv"
 thetaFileName = "./modelParameters.csv"
@@ -18,8 +19,8 @@ outputFileName = "./PredictionsData/" + dateToPredict + ".csv"
 currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
 
 minGames = 0
-numPreviousGamesToConsider = 5
-discretizedStates = [10, 20, 30]
+numPreviousGamesToConsider = predictionParameters.numPreviousGamesToConsider
+discretizedStates = predictionParameters.discretizedStates
 
 DKData = pd.read_csv(DKFileName)
 players = pd.read_csv(playersFileName)

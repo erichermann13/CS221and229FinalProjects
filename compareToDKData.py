@@ -10,7 +10,7 @@ import os
 year = 2016
 pathToSalariesData = "/Users/Eric/CS221and229FinalProjects/SalariesData"
 
-minPoints = 20
+minPoints = 40
 
 
 
@@ -43,23 +43,39 @@ for DKFile in os.listdir(pathToSalariesData):
 		newFrame = newFrame[newFrame.DKPointsOriginal != 0]
 		newFrame = newFrame[np.isfinite(newFrame['DKPointsOriginal'])]
 
-		newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPointsOriginal']
-		newFrame['Difference'] = newFrame['Difference'].abs()
-
-		newFrame['Error'] = newFrame['Difference']/newFrame['DKPointsOriginal']
-		newFrame['Error'] = newFrame['Error'].abs()
-
 		newFrame = newFrame[newFrame['DKPointsOriginal'] > minPoints]
 
-		averageError = newFrame['Error'].mean()
-		averageDiff = newFrame['Difference'].mean()
-		if not math.isnan(averageError):
+		newFrame['Difference'] = newFrame['AvgPointsPerGame'] - newFrame['DKPointsOriginal']
+		diffSeries = newFrame['Difference'].abs()
+
+		newFrame['Error'] = newFrame['Difference']/newFrame['DKPointsOriginal']
+		errorSeries = newFrame['Error'].abs()
+
+
+
+		if not math.isnan(errorSeries.mean()):
+			numElems = errorSeries.size
+			averageError = 0.0
+			averageDiff = 0.0
+			for i in xrange(0, numElems):
+				averageError += errorSeries.iloc[i]**2
+				averageDiff += diffSeries.iloc[i]**2
+			averageError = math.sqrt(averageError/numElems)
+			averageDiff = math.sqrt(averageDiff/numElems)
 			print "%s: Average Error %f Average Diff: %f" % (str(testDate), averageError, averageDiff)
 			# print "Avg Error/Avg Diff: %f" % (averageError/averageDiff)
 			errors.append(averageError)
 			diffs.append(averageDiff)
 
-print "Overall: Average Error %f Average Diff %f" % (np.mean(errors), np.mean(diffs))
+overallError = 0.0
+overallDiff = 0.0
+for i in xrange(0, len(errors)):
+	overallError += errors[i]**2
+	overallDiff += diffs[i]**2
+overallError = math.sqrt(overallError/len(errors))
+overallDiff = math.sqrt(overallDiff/len(diffs))
+
+print "Overall: Average Error %f Average Diff %f" % (overallError, overallDiff)
 
 
 

@@ -7,8 +7,9 @@ import numpy as np
 import math
 from scipy.spatial import distance
 import copy
+import predictionParameters
 
-year = 2015
+year = predictionParameters.trainYear
 
 playersFile = './players_clean' + str(year) + '.csv'
 outputFileName = './predictorData' + str(year) + '.csv'
@@ -29,19 +30,16 @@ uniquePlayers = pd.unique(playerNames)
 numPlayers = len(uniquePlayers)
 trainFraction = 3.0/4
 minGames = 20
-numPreviousGamesToConsider = 5
+numPreviousGamesToConsider = predictionParameters.numPreviousGamesToConsider
 numIterations = 20
 convergenceConstant = 0.05
 
-discretizedStates = [10, 20, 30]
+discretizedStates = predictionParameters.discretizedStates
 
 trainPlayers = uniquePlayers[0:(numPlayers*trainFraction)]
 testPlayers = uniquePlayers[(numPlayers*trainFraction):]
 
-dataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', '+/-', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_score', 'home_team_wins', 'visit_team_score']
-newDataToIgnore = ['player', 'team', 'date', 'home_team', 'visit_team', 'Unnamed: 0.1', 'game_id', 'Unnamed: 0', 
-'away_team_losses', 'away_team_wins', 'home_team_losses', 'home_team_wins', 'home_win_pct', 'away_win_pct']
+dataToIgnore = predictionParameters.dataToIgnore
 
 playerBoxScoreData = ['+/-', '3PA', '3PM', 'AST', 'BLK', 'DKPoints', 'DREB', 'FGA', 'FGM', 'FTA', 'FTM', 
 'MIN', 'OREB', 'PF', 'PTS', 'REB', 'STL', 'TO']
@@ -49,8 +47,6 @@ teamBoxScoreData = ['home_team_score', 'visit_team_score', 'Home',
 'team_win_pct', 'opponent_win_pct']
 # Note that some data is really relevant for the current game being played
 currGameData = ['Home', 'team_win_pct', 'opponent_win_pct']
-
-dataToIgnore = newDataToIgnore
 
 thetaInterior = [0]*((len(data.iloc[0]) - (len(dataToIgnore)+1)) + len(currGameData))
 theta = []
@@ -93,7 +89,8 @@ def runTrainOrTest(playerData, trainBool, toOutput):
 				for newRow in currGameData:
 					playerAverages[newRow + 'Curr'] = playerData.iloc[k][newRow]
 
-				headers = playerAverages.axes[0]
+				# headers = playerAverages.axes[0]
+				# print headers
 
 				hFunction = np.dot(playerAverages, thetaToReview)
 				convertedDKPoints = convertBack(DKPoints)
@@ -148,10 +145,12 @@ def getAverageError(storedElems):
 	averageDiff = 0.0
 	numElems = len(storedElems)
 	for elem in storedElems:
-		averageError += elem[4]
-		averageDiff += elem[3]
+		averageError += elem[4]*elem[4]
+		averageDiff += elem[3]*elem[3]
 	averageError /= numElems
 	averageDiff /= numElems
+	averageError = math.sqrt(averageError)
+	averageDiff = math.sqrt(averageDiff)
 	return (averageError, averageDiff)
 
 trainError = getAverageError(trainToStore)
