@@ -22,7 +22,7 @@ def make_player_dict(player_filename):
             if row["AvgPointsPerGame"] < 10:
                 continue
             row["Position"] = get_possible_positions(row["Position"])
-            row["Salary"] = util.round_up(int(row["Salary"]), 500)
+            row["Salary"] = util.round_up(int(row["Salary"]), 200)
             #row["Salary"] = int(row["Salary"])
             row["Points"] = float(row["AvgPointsPerGame"])
             result[row["Name"]] = row
@@ -85,7 +85,6 @@ def get_beamsearch_results(csp, players):
     search = beamsearch.BeamSearch(players, k = BEAM_SIZE)
     start = time.time()
     best_teams = search.solve(csp) # TODO check that these work :  MCV and AC3
-    """
     for best_team in best_teams:
         total_cost = 0
         best_team = best_team[0]
@@ -96,7 +95,6 @@ def get_beamsearch_results(csp, players):
             print players[best_team[variable]]
             total_cost += players[best_team[variable]]["Salary"]
             print "Total cost was: {}".format(total_cost)
-    """
     if best_teams:
         return best_teams[0]
     else:

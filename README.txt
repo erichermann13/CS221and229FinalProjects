@@ -2,6 +2,8 @@ README
 
 To make a prediction of scores for players on a particular day, first download the DraftKings NBA player salary data for that day into “./SalariesData/(MO.DAY.YEAR)”.  Then, change the date in the predictionParameters.py file to the date you want to predict for and run runPredictor.py. This will output score predictions into “./PredictionsData/(current date)”.
 
+To make a prediction for a team given a list of player scores, first make sure that you have a csv of the same form as the current csvs in SalariesData. Then, run csp_make_teams.py
+
 Explanation of Files:
 (in some order of importance)
 
@@ -30,6 +32,8 @@ util.py, regressionUtil.py - Contain functions useful to the regression and CSP 
 backtracking.py - Contains the backtracking search algorithm. We eventually implemented beam search.
 
 baseline.py - Our original baseline algorithm
+
+beamsearch.py - Contains our implementation of the beam search algorithm. Used as a module in csp_make_teams.py 
 
 SalariesData - A folder containing all of the downloaded DraftKings salary data each day we’ve managed to download it
 
