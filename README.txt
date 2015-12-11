@@ -23,6 +23,8 @@ cleanData.py - Takes data from players(year).csv and centers each column with ze
 
 compareToDKData.py - Analyzes DraftKings’ predictions accuracy by comparing predicted DK scores to actual DraftKings points players scored on a given night
 
+evaluate_csp.py - Uses our CSP to create teams with Draftkings' predictions and compares the scores of our teams to the scores of the teams created by FantasySports
+
 util.py, regressionUtil.py - Contain functions useful to the regression and CSP problems
 
 backtracking.py - Contains the backtracking search algorithm. We eventually implemented beam search.

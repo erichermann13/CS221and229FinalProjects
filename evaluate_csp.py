@@ -4,32 +4,37 @@ import csv
 import csp_make_teams
 our_teams_csv = 'teams_from_csp.csv'
 their_teams_csv = 'teams_from_fsports.csv'
+import pandas as pd
+
 def main():
-    #Make csv with teams from the thing for each day
     #make_teams_for_all_days()
-    #make function to score from csv
     #our_scores = calculate_team_score(our_teams_csv)
     their_scores = calculate_team_score(their_teams_csv)
-    our_scores = []
-    #score both
+    our_teams = pd.read_csv(our_teams_csv)
+    our_scores = our_teams.TotalPoints
+    print "our scores was: {}".format(our_scores)
+    print "their scores was: {}".format(their_scores)
 
     #do analysis about what the difference is!
 
 #returns dict from date to scores
 def calculate_team_score(teams_filename):
-    result = {}
+    #result = {}
+    result = []
     with open(teams_filename) as teams_file:
         teams_reader = csv.reader(teams_file)
+        header = teams_reader.next()
         for team in teams_reader:
             print "team was {}".format(team)
             date = team[0]
+            if not date: continue
             total_score = 0
             with open('SalariesData/DKSalaries{}.csv'.format(date)) as dates:
                 scores_reader = csv.DictReader(dates)
                 for player in scores_reader:
                     if player["Name"] in team:
-                        total_score += player["AvgPointsPerGame"]
-            result[date] = total_score
+                        total_score += float(player["AvgPointsPerGame"].replace("'",""))
+            result.append(total_score)
     return result
 
 def make_teams_for_all_days():
