@@ -2,9 +2,10 @@
 import sys
 import csv
 import csp_make_teams
+import pandas as pd
+import numpy as np
 our_teams_csv = 'teams_from_csp.csv'
 their_teams_csv = 'teams_from_fsports.csv'
-import pandas as pd
 
 def main():
     #make_teams_for_all_days()
@@ -12,11 +13,16 @@ def main():
     scores = pd.read_csv(our_teams_csv)
     our_scores =scores.TotalPoints.tolist()
     scores['FantasyPoints'] = their_scores
-
-    print "our scores was: {}".format(len(our_scores))
-    print "their scores was: {}".format(len(their_scores))
-
-    #do analysis about what the difference is!
+    print "our scores was: {}".format(our_scores)
+    print "their scores was: {}".format(their_scores)
+    scores['diffScore'] = scores['TotalPoints'].sub(scores['FantasyPoints'], axis = 0)
+    diff_mean = np.mean(scores.diffScore.tolist())
+    their_mean = np.mean(scores.FantasyPoints.tolist())
+    our_mean = np.mean(scores.TotalPoints.tolist())
+    print "Their mean was {}".format(their_mean)
+    print "Our mean was {}".format(our_mean)
+    print "Mean difference was {}".format(diff_mean)
+    print scores.diffScore
 
 #returns dict from date to scores
 def calculate_team_score(teams_filename):
